@@ -4,11 +4,21 @@
 
 void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);
+void makearg(char * arg, int index, char * storage);
 
-
-struct PCMD parse(char cmd [])
+struct PCMD parse(char cmd [], struct PCMD * cmdstr )
 {
-	
+   int i = 0;
+   parse_whitespace(cmd);
+
+   for(i = 0; i < 50; i++)
+   {
+      CMD1[i] = NULL;
+      CMD2[i] = NULL;
+      CMD2[i] = NULL;
+      CMD2[i] = NULL;
+   }
+
 }
 
 
@@ -89,3 +99,8 @@ void sepBych(char ch, char * line)
 
 }
 
+void makearg(char * arg,char * storage)
+{
+   storage = (char *)malloc(strlen(arg) + 1);
+   strcpy(storage,arg);
+}

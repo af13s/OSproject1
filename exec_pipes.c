@@ -5,15 +5,15 @@
 
 #define EXIT_FAILURE 1
 
-void exec_pipe(struct PCMD cmds)
+void exec_pipes(struct PCMD cmds)
 {
 
-
-
-	char **cm[4] = {NULL, NULL, NULL, NULL};
+  // creating array of char pointer pointers
+	char **cm[5] = {NULL, NULL, NULL, NULL, NULL};
 
   int i;
   
+  //setting char pointer pointers to each command that exists
   for ( i = 0; i <= cmds.pipe_num; i++)
   {
       if (i == 0)
@@ -31,30 +31,37 @@ void exec_pipe(struct PCMD cmds)
 
   int   p[2];
   pid_t pid;
-	int   fd_in = 0;
+	int   in = 0;
+
+  //will be used to iterate
 	char *** cmd = cm;
+
 
   while (*cmd != NULL)
     {
       pipe(p);
-      if ((pid = fork()) == -1)
+       if ((pid = fork()) == 0)
+        {
+          dup2(in, 0); //based on old input change the input 
+
+          if (*(cmd + 1) != NULL)
+          {
+            dup2(p[1], 1);
+          }
+
+          close(p[0]);
+          execv((*cmd)[0], *cmd);
+          exit(EXIT_FAILURE);
+        }
+        else if (pid == -1)
         {
           printf("Could not create child");
-        }
-      else if (pid == 0)
-        {
-          dup2(fd_in, 0); //change the input according to the old one 
-          if (*(cmd + 1) != NULL)
-            dup2(p[1], 1);
-          close(p[0]);
-          execvp((*cmd)[0], *cmd);
-          exit(EXIT_FAILURE);
         }
       else
         {
           wait(NULL);
           close(p[1]);
-          fd_in = p[0]; //save the input for the next command
+          in = p[0]; //for the next command, the input is preserved
           cmd++;
         }
     }

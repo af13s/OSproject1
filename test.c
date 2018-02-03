@@ -8,11 +8,13 @@
 int main()
 {
 
-    //Testing pipe functions
+    /*************************** envar test *************************************/
 
-    //set cmds to execute
-    char **testing;
 
+    /*char string [] = "$AYEE";
+    printf("%s" , enVar(string,"/AYEE"));*/
+
+    /********* exec_pipes test ***************************************/
     char *cmd1 [50];
     char *cmd2 [50];
     char *cmd3 [50];
@@ -45,10 +47,10 @@ int main()
     test.normal = 1;
     test.background = 0;
 
-    testing = test.CMD1;
+    //printf("executing pipe\n");
+    exec_pipes(test);
+    //*////////////////////////////////////////////////////////////////////////////////
 
-    printf("executing pipe\n");
-    exec_pipe(test);
 
     /*char *argsv [2];
     char cmd[] = "/bin/ls";
@@ -115,10 +117,6 @@ int main()
     //execvp(argsv[0],argsv);
     //printf("%s",));
    // printf("%s",l);*/
-
-    free (cmd1[0]);
-    free (cmd2[0]);
-    free (cmd3[0]);
 
     return 0;
 }

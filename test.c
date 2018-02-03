@@ -7,17 +7,10 @@
 
 int main()
 {
-    /*char *argsv [3];
-    char cmd[] = "/bin/ls";
-    char argument[] = "-l"
-    
-    argsv[0] = (char*)malloc(strlen(cmd)+1);
-    argsv[1] = (char*)malloc(strlen(argument)+1);
-    
-    strcpy(argsv[0],cmd);
-    strcpy(argsv[1],argument);*/
 
-    // testing PCMD struct
+    //Testing pipe functions
+
+    //set cmds to execute
     char *cmd1 [50];
     char *cmd2 [50];
 
@@ -32,18 +25,54 @@ int main()
 
     // test CMD struct
     struct PCMD test;
-
     test.CMD1[0] = cmd1[0];
     test.CMD2[0] = cmd2[0];
-
     test.redir_type = NOT;
     test.pipe_num = 1;
     test.normal = 1;
     test.background = 0;
 
+    exec_pipe(test);
 
-    //printf("%s",argsv[0]);
-    execvp(test.CMD1[0],test.CMD1);
+    return 0;
+    
+    /*char *argsv [3];
+    char cmd[] = "/bin/ls";
+    char argument[] = "-l"
+    
+    argsv[0] = (char*)malloc(strlen(cmd)+1);
+    argsv[1] = (char*)malloc(strlen(argument)+1);
+    
+    strcpy(argsv[0],cmd);
+    strcpy(argsv[1],argument);*/
+
+    // testing PCMD struct
+    // char *cmd1 [50];
+    // char *cmd2 [50];
+
+    // char cmda[] = "/bin/ls";
+    // char cmdb[] = "/usr/bin/wc";
+
+    // cmd1[0] = (char*)malloc(strlen(cmda)+1);
+    // cmd2[0] = (char*)malloc(strlen(cmdb)+1);
+
+    // strcpy(cmd1[0],cmda);
+    // strcpy(cmd2[0],cmdb);
+
+    // // test CMD struct
+    // struct PCMD test;
+
+    // test.CMD1[0] = cmd1[0];
+    // test.CMD2[0] = cmd2[0];
+
+    // test.redir_type = NOT;
+    // test.pipe_num = 1;
+    // test.normal = 1;
+    // test.background = 0;
+
+
+    // //printf("%s",argsv[0]);
+    // execvp(test.CMD1[0],test.CMD1);
 
     /*char line [256];
     char cmd [50][50];

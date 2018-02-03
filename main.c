@@ -7,31 +7,20 @@
 
 int main()
 {
-    //Testing pipe functions
+  struct PCMD parsed;
+  char input_line [256];
 
-    //set cmds to execute
-    char *cmd1 [50];
-    char *cmd2 [50];
+  while(1)
+  {
+    prompt();
 
-    char cmda[] = "/bin/ls";
-    char cmdb[] = "/usr/bin/wc";
+    // collect input from stdin
+    input_line = scanf("%[^\n]%*c",line);
 
-    cmd1[0] = (char*)malloc(strlen(cmda)+1);
-    cmd2[0] = (char*)malloc(strlen(cmdb)+1);
+    // convert input into parsed CMD struct (PCMD) defined in functions.h
+    parsed = parse(input_line);
 
-    strcpy(cmd1[0],cmda);
-    strcpy(cmd2[0],cmdb);
-
-    // test CMD struct
-    struct PCMD test;
-    test.CMD1[0] = cmd1[0];
-    test.CMD2[0] = cmd2[0];
-    test.redir_type = NOT;
-    test.pipe_num = 1;
-    test.normal = 1;
-    test.background = 0;
-
-    exec_pipe(test);
-
-    return 0;
+    execute(parsed);
+    
+  }
 }

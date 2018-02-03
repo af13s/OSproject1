@@ -34,6 +34,7 @@ void exec_pipe(struct PCMD input)
 			close(fd[0]);
 			close(fd[1]);
 			//Execute Command
+			printf("\n");
 			execv(input.CMD2[0],input.CMD2);
 		}
 	}

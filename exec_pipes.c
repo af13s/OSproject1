@@ -12,7 +12,9 @@ void exec_pipe(struct PCMD cmds)
 
 	char **cm[4] = {NULL, NULL, NULL, NULL};
 
-  for (int i = 0; i <= cmds.pipe_num; i++)
+  int i;
+  
+  for ( i = 0; i <= cmds.pipe_num; i++)
   {
       if (i == 0)
         cm[0] =  cmds.CMD1;

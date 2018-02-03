@@ -116,5 +116,9 @@ int main()
     //printf("%s",));
    // printf("%s",l);*/
 
+    free (cmd1[0]);
+    free (cmd2[0]);
+    free (cmd3[0]);
+
     return 0;
 }

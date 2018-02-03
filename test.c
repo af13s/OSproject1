@@ -11,7 +11,7 @@ int main()
     //Testing pipe functions
 
     //set cmds to execute
-    char *cmd1 [50];
+    /*char *cmd1 [50];
     char *cmd2 [50];
     char *cmd3 [50];
 
@@ -39,17 +39,17 @@ int main()
 
     exec_pipe(test);
 
-    return 0;
+    return 0;*/
 
-    /*char *argsv [3];
+    char *argsv [3];
     char cmd[] = "/bin/ls";
-    char argument[] = "-l"
+    //char argument[] = "-l";
     
     argsv[0] = (char*)malloc(strlen(cmd)+1);
-    argsv[1] = (char*)malloc(strlen(argument)+1);
+    //argsv[1] = (char*)malloc(strlen(argument)+1);
     
     strcpy(argsv[0],cmd);
-    strcpy(argsv[1],argument);*/
+    //strcpy(argsv[1],argument);
 
     // testing PCMD struct
     // char *cmd1 [50];
@@ -77,7 +77,7 @@ int main()
 
 
     // //printf("%s",argsv[0]);
-    // execvp(test.CMD1[0],test.CMD1);
+    execv(argsv[0],argsv);
 
     /*char line [256];
     char cmd [50][50];

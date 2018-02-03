@@ -8,18 +8,17 @@
 
 void exec_redirect(struct PCMD cmds)
 {
+	// assumes pathname is in cmd2 and that redirect smybol thrown away
+
 	pid_t pid;
 	if ((pid = fork()) < 0)
 	    printf("there was an error");
 
 	else if (pid == 0)
 	{
-		
-
 	    if (cmds.redir_type == IN)
 	    {
 	    	int fd = open(cmds.CMD2[0],O_RDONLY);
-	        //int fd = open(cmds.CMD2[0]);
 	        //close(STDIN_FILENO);
 	        dup2(fd,STDIN_FILENO);
 	        close(fd);
@@ -27,9 +26,8 @@ void exec_redirect(struct PCMD cmds)
 
 	    if (cmds.redir_type == OUT)
 	    {
-	    	int fd = open(cmds.CMD2[0],O_CREAT | O_TRUNC);
-	        //int fd1 = open(cmds.CMD2[0]) ;
-	        //close(STDIN_FILENO);
+	    	int fd = open(cmds.CMD2[0], O_CREAT | O_TRUNC);
+	        //close(STDIN_FILENO); not sure of this line may work without
 	        dup2(fd, STDOUT_FILENO);
 	        close(fd);
 	    }

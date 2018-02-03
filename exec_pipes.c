@@ -7,7 +7,26 @@
 
 void exec_pipe(struct PCMD cmds)
 {
-	char **cm[] = {cmds.CMD1, cmds.CMD2, cmds.CMD3, NULL, NULL};
+
+
+
+	char **cm[4] = {NULL, NULL, NULL, NULL};
+
+  for (int i = 0; i <= cmds.pipe_num; i++)
+  {
+      if (i == 0)
+        cm[0] =  cmds.CMD1;
+    
+     if (i == 1)
+        cm[1] = cmds.CMD2;
+
+     if (i == 2)
+        cm[2] = cmds.CMD3;
+        
+     if (i == 3)
+        cm[3] = cmds.CMD4;
+  }
+
   int   p[2];
   pid_t pid;
 	int   fd_in = 0;

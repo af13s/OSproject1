@@ -36,7 +36,7 @@ struct PCMD
 struct PCMD parse( char cmd []);
 char * enVar( char  Name [] , char Value []);
 void execute(struct PCMD);
-void exec_pipe(struct PCMD);
+void exec_pipes(struct PCMD);
 void exec_builtIn(struct PCMD);
 void exec_redirect(struct PCMD);
 void prompt();

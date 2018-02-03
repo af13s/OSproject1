@@ -5,7 +5,7 @@
 
 #define EXIT_FAILURE 1
 
-void exec_pipe(struct PCMD cmds)
+void exec_pipes(struct PCMD cmds)
 {
 
   // creating array of char pointer pointers

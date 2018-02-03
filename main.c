@@ -25,7 +25,7 @@ int main()
     // convert input into parsed CMD struct (PCMD) defined in functions.h
     //parsed = parse(input_line);
 
-    //execute(parsed);
+    execute(parsed);
     run++;
   }
 }

@@ -19,7 +19,7 @@ int main()
     scanf("%[^\n]%*c",input_line);
 
     // convert input into parsed CMD struct (PCMD) defined in functions.h
-    parsed = parse(input_line);
+    parse(input_line,&parsed);
 
     execute(parsed);
     

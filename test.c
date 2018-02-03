@@ -11,10 +11,10 @@ int main()
     /*************************** envar test *************************************/
 
 
-    char string [] = "$AYEE";
-    printf("%s" , enVar(string,"/AYEE"));
+    /*char string [] = "$AYEE";
+    printf("%s" , enVar(string,"/AYEE"));*/
 
-    /********* exec_pipes test ***************************************
+    /********* exec_pipes test ***************************************/
     char *cmd1 [50];
     char *cmd2 [50];
     char *cmd3 [50];
@@ -47,11 +47,9 @@ int main()
     test.normal = 1;
     test.background = 0;
 
-    testing = test.CMD1;
-
-    printf("executing pipe\n");
-    exec_pipe(test);
-    *////////////////////////////////////////////////////////////////////////////////
+    //printf("executing pipe\n");
+    exec_pipes(test);
+    //*////////////////////////////////////////////////////////////////////////////////
 
 
     /*char *argsv [2];

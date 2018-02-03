@@ -5,6 +5,7 @@
 
 char * enVar( char namez [], char value [])
 {
+	// stripping $ from string before passing to getenv()
 	char * name = &namez[1];
 
 	if (value == NULL)

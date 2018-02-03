@@ -24,10 +24,8 @@ int main()
 
     // test CMD struct
     struct PCMD test;
-
     test.CMD1[0] = cmd1[0];
     test.CMD2[0] = cmd2[0];
-
     test.redir_type = NOT;
     test.pipe_num = 1;
     test.normal = 1;

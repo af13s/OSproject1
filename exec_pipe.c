@@ -8,7 +8,7 @@ void exec_pipe(struct PCMD input)
 	int valid;
 	
 	valid = pipe(fd);
-
+	
 	if (valid == -1)
 		printf("couldn't pipe");
 

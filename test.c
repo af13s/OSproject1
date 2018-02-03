@@ -13,29 +13,34 @@ int main()
     //set cmds to execute
     char *cmd1 [50];
     char *cmd2 [50];
+    char *cmd3 [50];
 
     char cmda[] = "/bin/ls";
     char cmdb[] = "/usr/bin/wc";
+    char cmdc[] = "/usr/bin/wc";
 
     cmd1[0] = (char*)malloc(strlen(cmda)+1);
     cmd2[0] = (char*)malloc(strlen(cmdb)+1);
+    cmd3[0] = (char*)malloc(strlen(cmdc)+1);
 
     strcpy(cmd1[0],cmda);
     strcpy(cmd2[0],cmdb);
+    strcpy(cmd3[0],cmdc);
 
     // test CMD struct
     struct PCMD test;
     test.CMD1[0] = cmd1[0];
     test.CMD2[0] = cmd2[0];
+    test.CMD3[0] = cmd3[0];
     test.redir_type = NOT;
-    test.pipe_num = 1;
+    test.pipe_num = 2;
     test.normal = 1;
     test.background = 0;
 
     exec_pipe(test);
 
     return 0;
-    
+
     /*char *argsv [3];
     char cmd[] = "/bin/ls";
     char argument[] = "-l"

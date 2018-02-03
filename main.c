@@ -19,7 +19,7 @@ int main()
 
     // collect input from stdin
     //scanf("%[^\n]%*c",input_line);
-    //scanf("%s",input_line);
+    scanf("%s",input_line);
 
 
     // convert input into parsed CMD struct (PCMD) defined in functions.h

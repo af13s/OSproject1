@@ -41,7 +41,7 @@ int main()
 
     return 0;*/
 
-    char *argsv [3];
+    char *argsv [2];
     char cmd[] = "/bin/ls";
     //char argument[] = "-l";
     

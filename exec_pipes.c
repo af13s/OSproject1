@@ -9,7 +9,7 @@ void exec_pipes(struct PCMD cmds)
 {
 
   // creating array of char pointer pointers
-	char **cm[4] = {NULL, NULL, NULL, NULL};
+	char **cm[4] = {NULL, NULL, NULL, NULL, NULL};
 
   int i;
   

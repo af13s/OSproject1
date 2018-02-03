@@ -50,7 +50,7 @@ void exec_pipes(struct PCMD cmds)
           }
 
           close(p[0]);
-          execvp((*cmd)[0], *cmd);
+          execv((*cmd)[0], *cmd);
           exit(EXIT_FAILURE);
         }
         else if (pid == -1)

@@ -7,15 +7,16 @@
 
 int main()
 {
-  struct PCMD parsed;
+  
   char input_line [256];
 
   while(1)
   {
+    struct PCMD parsed;
     prompt();
 
     // collect input from stdin
-    input_line = scanf("%[^\n]%*c",line);
+    scanf("%[^\n]%*c",input_line);
 
     // convert input into parsed CMD struct (PCMD) defined in functions.h
     parsed = parse(input_line);

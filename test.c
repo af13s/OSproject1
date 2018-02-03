@@ -11,6 +11,8 @@ int main()
     //Testing pipe functions
 
     //set cmds to execute
+    char **testing;
+
     char *cmd1 [50];
     char *cmd2 [50];
     char *cmd3 [50];
@@ -43,9 +45,10 @@ int main()
     test.normal = 1;
     test.background = 0;
 
-    exec_pipe(test);
+    testing = test.CMD1;
 
-    return 0;
+    printf("executing pipe\n");
+    exec_pipe(test);
 
     /*char *argsv [2];
     char cmd[] = "/bin/ls";
@@ -85,8 +88,8 @@ int main()
     // test.background = 0;
 
 
-    // //printf("%s",argsv[0]);
-    //execv(argsv[0],argsv);
+    //printf("%s",argsv[0]);
+    //execv(*testing,testing);
 
     /*char line [256];
     char cmd [50][50];

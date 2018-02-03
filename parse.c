@@ -1,5 +1,6 @@
 #include "functions.h"
 #include <ctype.h>
+#include <string.h>
 
 void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);

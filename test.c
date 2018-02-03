@@ -86,7 +86,7 @@ int main()
 
 
     // //printf("%s",argsv[0]);
-    execv(argsv[0],argsv);
+    //execv(argsv[0],argsv);
 
     /*char line [256];
     char cmd [50][50];

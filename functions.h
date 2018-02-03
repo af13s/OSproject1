@@ -20,23 +20,25 @@
 
 struct PCMD
 {
-	char CMD1 [SIZE][SIZE];
-	char CMD2 [SIZE][SIZE];
-	char CMD3 [SIZE][SIZE];
-	char CMD4 [SIZE][SIZE];
+	char *CMD1 [SIZE];
+	char *CMD2 [SIZE];
+	char *CMD3 [SIZE];
+	char *CMD4 [SIZE];
 	
 	int redir_type;
 	int pipe_num;
 	int normal;
 	int built_in;
 	int background;
-}
+};
 
 
-struct PCMD parse(char cmd []);
+struct PCMD parse( char cmd []);
 char * getEnVar( char string []);
 void execute(struct PCMD);
-void builtIn(PCMD);
+void exec_pipe(struct PCMD);
+void exec_builtIn(struct PCMD);
+void exec_redirect(struct PCMD);
 void prompt();
 char * path_res(char symbol []);
 

@@ -33,7 +33,7 @@ struct PCMD
 };
 
 
-struct PCMD parse( char cmd []);
+void parse( char cmd [], struct PCMD * cmdstr);
 char * getEnVar( char string []);
 void execute(struct PCMD);
 void exec_pipe(struct PCMD);

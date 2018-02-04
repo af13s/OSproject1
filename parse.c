@@ -6,7 +6,7 @@ void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);
 char* makearg(char * arg);
 
-
+/*
 int parseStart = 0;
 int main()
 {
@@ -15,9 +15,7 @@ int main()
 	struct PCMD tcmd;
 	char x[] = "This iis | a test  &    |hello| &jhgjhgjgjh";
 
-	//parse_whitespace(x);
-	//printf("%s\n",x );
-
+	
 	
 	parse(x,&tcmd);
 	for(i = 0; i < tcmd.bucNum1; i++)
@@ -42,7 +40,7 @@ int main()
 	return 0;
 	
 }
-
+*/
 void parse(char cmd [], struct PCMD * cstruct )
 {
    int i = 0;
@@ -78,7 +76,7 @@ void parse(char cmd [], struct PCMD * cstruct )
    }
 
    parse_whitespace(cmd);
-   printf("%s\n",cmd );
+   
    char * sp, * ecp, *tempp;
 
   
@@ -88,9 +86,9 @@ void parse(char cmd [], struct PCMD * cstruct )
    for(i = 0; cmd[i]; i++)
    {
    		if(cmd[i] == '<')
-   			cstruct->redir_type = LEFT;
+   			cstruct->redir_type = IN;
    		else if (cmd[i] == '>')
-   			cstruct->redir_type = RIGHT;
+   			cstruct->redir_type = OUT;
    		else if(cmd[i] == '&')
    			cstruct->background++;
    		else 
@@ -133,105 +131,6 @@ void parse(char cmd [], struct PCMD * cstruct )
    		}	
 
    }
-/*
-   for(i = 0; i < bucNum1; i++)
-   {
-   	printf("%s\n",cstruct->CMD1[i] );
-   }
-
-   for(i = 0; i < bucNum2; i++)
-   {
-   	printf("%s\n",cstruct->CMD2[i] );
-   }
-
-   for(i = 0; i < bucNum3; i++)
-   {
-   	printf("%s\n",cstruct->CMD3[i] );
-   }
-
-
-   */
-   
-/*
-   for(i = 0; cmd[i]; i++)
-   {
-   		if(cmd[i] == '<' || cmd[i] == '>' || cmd[i] == '|')
-   		{
-   			if(cmd[i] == '<')
-   				cstruct->redir_type = LEFT;
-   			else if (cmd[i] == '>')
-   				cstruct->redir_type = RIGHT;
-   			else 
-   				pipe_num++;
-
-   			if(!cm1)
-   				cm1 = cmd;
-   			else
-   			{
-   				if(!cm2)
-   					cm2 = cm1 + 1;
-   				else
-   				{
-   					if(!cm3)
-   						cm3 = cm2 + 1;
-   					else
-   					{
-   						cm4 = cm3 + 1;
-
-   					}
-   				}
-   			}
-   		}
-   }
-
-   if (!cm1)
-   		cm1 = cmd;
-
-   for(i = 0; cmd[i]; i++)
-   {
-   		if(cmd[i] == ' ')
-   		{
-   			cmd[i] == '\0';
-   		}
-   }
-
-   char * temp1,temp2;
-   int numbucs = 0;
-   if(!cm2)
-   {
-   		for(temp1 = temp2 = cm1; temp1 != cmd[strlen(cmd)]; temp1++)
-   		{
-   			if( ! *temp1 )
-   			{
-   				makearg(temp2,cstruct->CMD1[numbucs]);
-   				numbucs++;
-   				temp2 = ++temp1;
-   			}
-   		}
-
-   		fillbuckets(cm1,cm1 + strlen(cmd) + 1, cstruct->CMD1);
-
-   }
-
-   else if(!cm3)
-   {
-   		fillbuckets(cm1,cm2+1, cstruct->CMD1);
-   		fillbuckets(cm2,cm1 + strlen(cmd) + 1,cstruct->CMD2);
-   }
-   else if(!cm4)
-   {
-    	fillbuckets(cm1,cm2+1, cstruct->CMD1);
-   		fillbuckets(cm2,cm3+1,cstruct->CMD2);
-   		fillbuckets(cm3,cm1 + strlen(cmd) + 1,cstruct->CMD3);
-   }
-   else
-   {
-   		fillbuckets(cm1,cm2+1, cstruct->CMD1);
-   		fillbuckets(cm2,cm3+1,cstruct->CMD2);
-   		fillbuckets(cm3,cm4 + 1, cstruct->CMD3);
-   		fillbuckets(cm4,cm1 + strlen(cmd) + 1,cstruct->CMD4);
-   }
-*/
 
 
 
@@ -324,20 +223,3 @@ char * makearg(char * arg)
    return storage;
 }
 
-/*
-void fillbuckets(char* start, char* stop, char ** arr)
-{
-	char * temp1, * temp2;
-	int numbucs = 0;
-	for(temp1 = temp2 = start; temp1 != stop; temp1++)
-   		{
-   			if( ! *temp1 )
-   			{
-   				//makearg(temp2,arr[numbucs]);
-   				numbucs++;
-   				temp2 = ++temp1;
-   			}
-   		}
-
-}
-*/

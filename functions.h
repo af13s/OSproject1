@@ -2,8 +2,8 @@
 
 //redir_type
 #define NOT 0
-#define LEFT 1
-#define RIGHT 2
+#define IN 1
+#define OUT 2
 
 //built_in
 #define EXIT 0
@@ -49,10 +49,12 @@ struct PCMD
 };
 
 
+
 void parse( char cmd [], struct PCMD * cmdstr);
 char * getEnVar( char string []);
 
 char * enVar( char  Name [] , char Value []);
+
 
 void execute(struct PCMD);
 void exec_pipes(struct PCMD);

@@ -60,7 +60,7 @@ int main()
     argsv[1] = NULL;
     //argsv[1] = (char*)malloc(strlen(argument)+1);
     
-    strcpy(argsv[0],cmd);*/
+    strcpy(argsv[0],argsv);*/
 
 
     //strcpy(argsv[1],argument);

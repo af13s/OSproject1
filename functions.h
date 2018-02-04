@@ -16,6 +16,15 @@
 #define FALSE 0
 #define TRUE 1
 
+//inter command type
+
+	/* < */
+#define INPUTRD 1
+
+   /* > */
+#define OUTPUTRD 3
+
+#define PIPE 2
 
 
 struct PCMD
@@ -25,20 +34,26 @@ struct PCMD
 	char *CMD3 [SIZE];
 	char *CMD4 [SIZE];
 	
+
+
 	int redir_type;
 	int pipe_num;
 	int normal;
 	int built_in;
 	int background;
+
+	int bucNum1 ;
+   	int bucNum2;
+   	int bucNum3;
+   	int bucNum4;
 };
 
 
-<<<<<<< HEAD
 void parse( char cmd [], struct PCMD * cmdstr);
 char * getEnVar( char string []);
 
 char * enVar( char  Name [] , char Value []);
->>>>>>> 65aeef56454d0b8145875a8c0e8a738f78d5e4c3
+
 void execute(struct PCMD);
 void exec_pipes(struct PCMD);
 void exec_builtIn(struct PCMD);

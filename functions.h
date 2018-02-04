@@ -51,10 +51,8 @@ struct PCMD
 
 
 void parse( char cmd [], struct PCMD * cmdstr);
-
+struct PCMD generateTestPCMD();
 char * enVar( char  Name [] , char Value []);
-
-
 void execute(struct PCMD);
 void exec_pipes(struct PCMD);
 void exec_builtIn(struct PCMD);

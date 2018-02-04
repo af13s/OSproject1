@@ -1,0 +1,17 @@
+total 152
+-rw-r--r--  1 andrewflorial  staff    12 Feb  2 16:11 README.md
+-rwxr-xr-x  1 andrewflorial  staff  9668 Feb  4 10:31 a.out
+-rw-r--r--@ 1 andrewflorial  staff   450 Feb  3 12:56 enVar.c
+-rw-r--r--@ 1 andrewflorial  staff  1271 Feb  3 16:55 exec_pipes.c
+-rw-r--r--@ 1 andrewflorial  staff  1042 Feb  4 10:17 exec_redirect.c
+-rw-r--r--@ 1 andrewflorial  staff   822 Feb  4 10:24 execute.c
+-rw-r--r--  1 andrewflorial  staff   376 Feb  3 16:56 extest.c
+-rw-r--r--  1 andrewflorial  staff   942 Feb  4 10:21 functions.h
+-rw-r--r--@ 1 andrewflorial  staff   740 Feb  4 10:25 genTestPCMD.c
+-rw-r--r--  1 andrewflorial  staff   520 Feb  4 10:31 main.c
+-rw-r--r--  1 andrewflorial  staff   187 Feb  4 10:24 makefile
+-rw-r--r--  1 andrewflorial  staff  3884 Feb  4 08:50 parse.c
+-rw-r--r--@ 1 andrewflorial  staff   286 Feb  3 13:21 prompt.c
+-rwxr-xr-x  1 andrewflorial  staff  9668 Feb  4 10:28 shell
+-rw-r--r--@ 1 andrewflorial  staff  3255 Feb  4 10:16 test.c
+-rw-------  1 andrewflorial  staff     0 Feb  4 10:31 testfile

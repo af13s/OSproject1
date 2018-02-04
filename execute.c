@@ -19,7 +19,7 @@ void execute(struct PCMD cmd)
         	//int redir_type, int pipe_num, normal, built_in, background
         	if (cmd.redir_type != NOT)
         	{
-        		//exec_redirect(cmd);
+        		exec_redirect(cmd);
         		return;
         	}
 

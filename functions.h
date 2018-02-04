@@ -51,7 +51,6 @@ struct PCMD
 
 
 void parse( char cmd [], struct PCMD * cmdstr);
-char * getEnVar( char string []);
 
 char * enVar( char  Name [] , char Value []);
 

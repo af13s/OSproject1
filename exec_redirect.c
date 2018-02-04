@@ -35,7 +35,7 @@ void exec_redirect(struct PCMD cmds)
 
 	    execv(cmds.CMD1[0], cmds.CMD1);   // Or your preferred alternative
 	    printf("Failed to exec %s\n", cmds.CMD1[0]);
-	    exit(1);
+	    exit(1); 
 	}
 
 	else

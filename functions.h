@@ -11,6 +11,7 @@
 #define ECHO 2
 #define ETIME 3
 #define IO 4
+#define NOTBIN -1
 
 //normal
 #define FALSE 0
@@ -39,13 +40,22 @@ struct PCMD
 	int redir_type;
 	int pipe_num;
 	int normal;
-	int built_in;
+	
 	int background;
 
-	int bucNum1 ;
+	/*number of args in each cmd*/
+	int bucNum1;
    	int bucNum2;
    	int bucNum3;
    	int bucNum4;
+
+	/*if each cmd is built in*/
+   	int bin1;
+   	int bin2;
+	int bin3;
+	int bin4;
+
+
 };
 
 

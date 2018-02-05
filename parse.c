@@ -5,15 +5,17 @@
 void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);
 char* makearg(char * arg);
+void check4bin(char* cmd, int * bintype);
+extern int memoryAlloc;
 
 /*
-int parseStart = 0;
+
 int main()
 {
 
 	int i;
 	struct PCMD tcmd;
-	char x[] = "This iis | a test  &    |hello| &jhgjhgjgjh";
+	char x[] = "     ls | $HOM | dd";
 
 	
 	
@@ -37,6 +39,8 @@ int main()
    {
    	printf("B4: %s\n",tcmd.CMD4[i] );
    }
+
+   
 	return 0;
 	
 }
@@ -56,16 +60,16 @@ void parse(char cmd [], struct PCMD * cstruct )
    int numComs = 1;
    for(i = 0; i < 50; i++)
    {
-   	if(cstruct->CMD1[i] && parseStart)
+   	if(cstruct->CMD1[i] && memoryAlloc)
    	  free(cstruct->CMD1[i]);
 
-   	if(cstruct->CMD2[i] && parseStart)
+   	if(cstruct->CMD2[i] && memoryAlloc)
    	  free(cstruct->CMD2[i]);
    	
-   	if(cstruct->CMD3[i]&& parseStart)
+   	if(cstruct->CMD3[i]&& memoryAlloc)
    	  free(cstruct->CMD3[i]);
    	
-   	if(cstruct->CMD4[i]&& parseStart)
+   	if(cstruct->CMD4[i]&& memoryAlloc)
    	  free(cstruct->CMD4[i]);
     
       cstruct->CMD1[i] = NULL;
@@ -132,7 +136,11 @@ void parse(char cmd [], struct PCMD * cstruct )
 
    }
 
-
+   /*Check for builtins*/
+   check4bin(cstruct->CMD1[0],&cstruct->bin1);
+   check4bin(cstruct->CMD2[0],&cstruct->bin2);
+   check4bin(cstruct->CMD3[0],&cstruct->bin3);
+   check4bin(cstruct->CMD4[0],&cstruct->bin4);
 
 
 
@@ -182,7 +190,6 @@ void parse_whitespace(char* line)
 	sepBych('<',line);
 	sepBych('>',line);
 	sepBych('&',line);
-	sepBych('$',line);
 	sepBych('~',line);
 
 }
@@ -218,8 +225,43 @@ void sepBych(char ch, char * line)
 
 char * makearg(char * arg)
 {
-   char * storage = (char *)malloc(strlen(arg) + 1);
-   strcpy(storage,arg);
-   return storage;
+	memoryAlloc = TRUE;
+	char * temp = NULL;
+	char * storage;
+	if(arg[0] == '$' && arg[1])
+		temp = enVar(arg,NULL);
+
+	if(temp)
+	{
+		storage = (char *)malloc(strlen(temp) + 1);
+		strcpy(storage,temp);
+		return storage;
+	}
+	
+	storage = (char *)malloc(strlen(arg) + 1);
+   	strcpy(storage,arg);
+   	return storage;
 }
+
+void check4bin(char * cmd,int * bintype)
+{
+	if(cmd && !strcmp(cmd,"echo"))
+		*bintype = 2;
+
+	else if(cmd && !strcmp(cmd,"exit"))
+		*bintype = 0;
+
+	else if(cmd && !strcmp(cmd,"cd"))
+		*bintype = 1;
+
+	else if(cmd && !strcmp(cmd,"etime"))
+		*bintype = 3;
+
+	else if(cmd && !strcmp(cmd,"io"))
+		*bintype = 4;
+	else
+		*bintype = -1;
+
+}
+
 

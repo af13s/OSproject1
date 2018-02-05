@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include "functions.h"
 
+int memoryAlloc = FALSE;
+
+
 int main()
 {
   
@@ -19,4 +22,5 @@ int main()
     parse(input_line, &parsed);
     execute(parsed);
   }
+
 }

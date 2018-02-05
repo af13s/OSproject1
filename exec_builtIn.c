@@ -1,5 +1,8 @@
 #include "functions.h"
 #include <sys/time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 //built_in
 //#define EXIT 0
@@ -8,6 +11,8 @@
 //#define ETIME 3
 //#define IO 4
 
+void etime(char **);
+
 void exec_builtIn(struct PCMD cmds)
 {
 	switch(cmds.built_in) 
@@ -15,18 +20,18 @@ void exec_builtIn(struct PCMD cmds)
 
       case  EXIT:
          printf("Exiting Shell..." );
-         return 0;
+         exit(0);
          break;
 
       case CD :
-         enVar("$PWD",cmds.CMD2[0])
+         enVar("$PWD",cmds.CMD2[0]);
       	break;
 
       case ECHO :
-         printf("%s", cmds.CMD2[0])
+         printf("%s", cmds.CMD2[0]);
          break;
 
-      case ETIMEs:
+      case ETIME:
          etime(cmds.CMD2);
          break;
 
@@ -50,11 +55,11 @@ void etime(char ** cmd)
    if (fork() == 0)
       execv(*cmd,cmd);
    else
-      WAIT(NULL);
+      wait(NULL);
 
    gettimeofday(&end, NULL);
 
    elapsed = (end.tv_sec - start.tv_sec);
    elapsed += ((end.tv_usec - start.tv_usec) / (1000.0*1000.0));
-   printf("%d",elapsed);
+   printf("%LG",elapsed);
 }

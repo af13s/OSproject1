@@ -96,7 +96,7 @@ void parse(char cmd [], struct PCMD * cstruct )
    			cstruct->redir_type = OUT;
    		else if(cmd[i] == '&')
    			cstruct->background++;
-   		else 
+   		else if(cmd[i] == '|')
    			cstruct->pipe_num++;
    		
    		if(cmd[i] == ' ')

@@ -23,7 +23,7 @@ void execute(struct PCMD cmd)
         		return;
         	}
 
-        	if (cmd.pipe_num != 0 && cmd.normal == 1)
+        	if (cmd.pipe_num > 0 && cmd.normal == TRUE)
         	{
         		exec_pipes(cmd);
         		return;

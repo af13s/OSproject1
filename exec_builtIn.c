@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <sys/time.h>
 
 //built_in
 //#define EXIT 0
@@ -12,23 +13,24 @@ void exec_builtIn(struct PCMD cmds)
 	switch(cmds.built_in) 
 	{
 
-      case  0:
+      case  EXIT:
          printf("Exiting Shell..." );
          return 0;
          break;
 
-      case 1 :
+      case CD :
+         enVar("$PWD",cmds.CMD2[0])
       	break;
 
-      case 2 :
-         	echo(cmds.CMD2[0]);
+      case ECHO :
+         printf("%s", cmds.CMD2[0])
          break;
 
-      case 3 :
-         printf("You passed\n" );
+      case ETIMEs:
+         etime(cmds.CMD2);
          break;
 
-      case 4 :
+      case IO :
          printf("Better try again\n" );
          break;
 
@@ -37,7 +39,22 @@ void exec_builtIn(struct PCMD cmds)
    }
 }
 
-void echo (char input [])
+void etime(char ** cmd)
 {
+   struct timeval start;
+   struct timeval end;
+   long double elapsed;
 
+   gettimeofday(&start, NULL);
+
+   if (fork() == 0)
+      execv(*cmd,cmd);
+   else
+      WAIT(NULL);
+
+   gettimeofday(&end, NULL);
+
+   elapsed = (end.tv_sec - start.tv_sec);
+   elapsed += ((end.tv_usec - start.tv_usec) / (1000.0*1000.0));
+   printf("%d",elapsed);
 }

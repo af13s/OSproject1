@@ -69,6 +69,7 @@ void exec_builtIn(struct PCMD);
 void exec_redirect(struct PCMD);
 void prompt();
 char * path_res(char symbol []);
+char * commandPath(char *);
 
 //bool backgroundProcess(pid_t);
 

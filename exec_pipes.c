@@ -7,14 +7,12 @@
 
 void exec_pipes(struct PCMD cmds)
 {
-
-  // creating array of char pointer pointers
 	char **cm[5] = {NULL, NULL, NULL, NULL, NULL};
 
   int i;
   
   //setting char pointer pointers to each command that exists
-  for ( i = 0; i <= cmds.pipe_num; i++)
+  for ( i= 0; i <= cmds.pipe_num; i++)
   {
       if (i == 0)
         cm[0] =  cmds.CMD1;
@@ -28,6 +26,7 @@ void exec_pipes(struct PCMD cmds)
      if (i == 3)
         cm[3] = cmds.CMD4;
   }
+  
 
   int   p[2];
   pid_t pid;
@@ -35,7 +34,6 @@ void exec_pipes(struct PCMD cmds)
 
   //will be used to iterate
 	char *** cmd = cm;
-
 
   while (*cmd != NULL)
     {

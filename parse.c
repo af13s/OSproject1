@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h> 
 
 void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);

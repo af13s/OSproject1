@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include "functions.h"
 
+int memoryAlloc = FALSE;
+
+
 int main()
 {
   
@@ -28,4 +31,5 @@ int main()
     parsed = generateTestPCMD();
     execute(parsed);
   }
+
 }

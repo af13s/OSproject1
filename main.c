@@ -13,22 +13,19 @@ int main()
   
   char input_line [256];
 
-  int run = 0;
-
-  while(run < 3)
+  while(1)
   {
     struct PCMD parsed;
     prompt();
-    run++;
-    // collect input from stdin
-    //scanf("%[^\n]%*c",input_line);
-    scanf("%s",input_line);
-
-    // convert input into parsed CMD struct (PCMD) defined in functions.h
-
-    //parse(input_line,&parsed);
-
-    parsed = generateTestPCMD();
+    fgets(input_line, 255, stdin);
+    //printf("sending command to be parsed: %s", input_line);
+    parse(input_line, &parsed);
+    //printf(parsed.CMD1[0]);
+    //printf("%d",parsed.normal);
+    //strcpy(parsed.CMD1[0],"/bin/ls");
+    //printf("\nenter execution function\n");
+    //printf("\n %s \n",parsed.CMD1[0]);
+    //printf("\n %s\n ",parsed.CMD1[1]);
     execute(parsed);
   }
 

@@ -12,7 +12,7 @@ int main()
 
     /***** redir test ******/
 
-    char cmda[] = "/bin/ls";
+   /* char cmda[] = "/bin/ls";
     char cmdb[] = "testfile";
     char cmdc[] = "-l";
 
@@ -46,7 +46,7 @@ int main()
     test.background = 0;
 
     exec_redirect(test);
-    //execv(test.CMD1[0],test.CMD1);
+    //execv(test.CMD1[0],test.CMD1);*/
 
     /*************************** envar test *************************************/
 
@@ -92,36 +92,32 @@ int main()
     //*////////////////////////////////////////////////////////////////////////////////
 
 
-    /*char *argsv [2];
-    char cmd[] = "/bin/ls";
-    //char argument[] = "-l";
+
     
-    argsv[0] = (char*)malloc(strlen(cmd)+1);
-    argsv[1] = NULL;
-    //argsv[1] = (char*)malloc(strlen(argument)+1);
-    
-    strcpy(argsv[0],argsv);*/
 
+    //testing PCMD struct
+    char ** testing;
 
-    //strcpy(argsv[1],argument);
-
-    // testing PCMD struct
-    // char *cmd1 [50];
+     char *cmd1 [50];
     // char *cmd2 [50];
 
-    // char cmda[] = "/bin/ls";
+     char cmda[] = "/bin/ls";
     // char cmdb[] = "/usr/bin/wc";
 
-    // cmd1[0] = (char*)malloc(strlen(cmda)+1);
+     cmd1[0] = (char*)malloc(strlen(cmda)+1);
     // cmd2[0] = (char*)malloc(strlen(cmdb)+1);
 
-    // strcpy(cmd1[0],cmda);
+    strcpy(cmd1[0],cmda);
     // strcpy(cmd2[0],cmdb);
 
     // // test CMD struct
-    // struct PCMD test;
+     struct PCMD test;
 
-    // test.CMD1[0] = cmd1[0];
+     test.CMD1[0] = cmd1[0];
+     test.CMD1[1] = NULL;
+
+     testing = test.CMD1;
+
     // test.CMD2[0] = cmd2[0];
 
     // test.redir_type = NOT;
@@ -131,7 +127,7 @@ int main()
 
 
     //printf("%s",argsv[0]);
-    //execv(*testing,testing);
+    execv(*testing,testing);
 
     /*char line [256];
     char cmd [50][50];

@@ -1,21 +1,24 @@
 #include "functions.h"
 #include <ctype.h>
 #include <string.h>
+#include <stdio.h>
+#include <unistd.h>
 
 void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);
 char* makearg(char * arg);
-void check4bin(char* cmd, int * bintype);
+char * check4bin(char* cmd, int * bintype);
+char *  commandPath(char*);
 extern int memoryAlloc;
+//int memoryAlloc = FALSE;
 
 /*
-
 int main()
 {
 
 	int i;
 	struct PCMD tcmd;
-	char x[] = "     ls | $HOM | dd";
+	char x[] = "     ls | $HOME | ping befjhfekj";
 
 	
 	
@@ -40,11 +43,11 @@ int main()
    	printf("B4: %s\n",tcmd.CMD4[i] );
    }
 
-   
-	return 0;
-	
+  	
 }
 */
+
+
 void parse(char cmd [], struct PCMD * cstruct )
 {
    int i = 0;
@@ -137,10 +140,10 @@ void parse(char cmd [], struct PCMD * cstruct )
    }
 
    /*Check for builtins*/
-   check4bin(cstruct->CMD1[0],&cstruct->bin1);
-   check4bin(cstruct->CMD2[0],&cstruct->bin2);
-   check4bin(cstruct->CMD3[0],&cstruct->bin3);
-   check4bin(cstruct->CMD4[0],&cstruct->bin4);
+   cstruct->CMD1[0] = check4bin(cstruct->CMD1[0],&cstruct->bin1);
+   cstruct->CMD2[0] = check4bin(cstruct->CMD2[0],&cstruct->bin2);
+   cstruct->CMD3[0] = check4bin(cstruct->CMD3[0],&cstruct->bin3);
+   cstruct->CMD4[0] = check4bin(cstruct->CMD4[0],&cstruct->bin4);
 
 
 
@@ -228,6 +231,7 @@ char * makearg(char * arg)
 	memoryAlloc = TRUE;
 	char * temp = NULL;
 	char * storage;
+	
 	if(arg[0] == '$' && arg[1])
 		temp = enVar(arg,NULL);
 
@@ -243,7 +247,7 @@ char * makearg(char * arg)
    	return storage;
 }
 
-void check4bin(char * cmd,int * bintype)
+char * check4bin(char * cmd,int * bintype)
 {
 	if(cmd && !strcmp(cmd,"echo"))
 		*bintype = 2;
@@ -262,6 +266,10 @@ void check4bin(char * cmd,int * bintype)
 	else
 		*bintype = -1;
 
-}
+	if (cmd && *bintype == -1)
+		cmd = commandPath(cmd);
 
+	return cmd;
+
+}
 

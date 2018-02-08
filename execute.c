@@ -25,7 +25,7 @@ void execute(struct PCMD cmd)
         	//int redir_type, int pipe_num, normal, built_in, background
         	if (cmd.redir_type != 0)
         	{
-        		exec_redirect(cmd);
+        		//exec_redirect(cmd);
         		return;
         	}
 
@@ -41,7 +41,7 @@ void execute(struct PCMD cmd)
                 return;
             }
 
-            //execv(cmd.CMD1[0],cmd.CMD1);
+            execv(cmd.CMD1[0],cmd.CMD1);
         }
       else
         {

@@ -1,3 +1,4 @@
+#include "functions.h"
 
 void exec_pipes(struct PCMD cmds)
 {
@@ -43,7 +44,6 @@ void exec_pipes(struct PCMD cmds)
 
           close(p[0]);
           execv((*cmd)[0], *cmd);
-          exit(EXIT_FAILURE);
         }
         else if (pid == -1)
         {
@@ -51,7 +51,10 @@ void exec_pipes(struct PCMD cmds)
         }
       else
         {
-          wait(NULL); // wait for the child to finish
+          if (*(cmd + 1) == NULL)  
+            call_wait(pid,cmds); // wait for the child to finish
+          else
+            wait(NULL);
           close(p[1]);
           in = p[0]; //for the next command, the input is preserved
           cmd++;

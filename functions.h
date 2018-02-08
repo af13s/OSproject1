@@ -1,62 +1,14 @@
-#include "functions.h"
+#include <sys/types.h>
 #include <sys/time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-
-#include <stdio.h>
-#include<sys/types.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "functions.h"
-
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <errno.h>
-
-#include <unistd.h>
-#include <stdio.h>
-#include "functions.h"
-#include <stdlib.h>
-
-#include <unistd.h>
-#include <stdio.h>
-#include "functions.h"
-#include <stdlib.h>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
 #include <fcntl.h>
-
-#include <stdio.h>
-#include<sys/types.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "functions.h"
-
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-
-#include <stdio.h>
-#include<sys/types.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "functions.h"
-
-#include "functions.h"
 #include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h> 
-
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "functions.h"
 
 #define SIZE 50
 
@@ -69,7 +21,7 @@
 #define EXIT 0
 #define CD 1
 #define ECHO 2
-#define ETIME 3
+#define ETIM 3
 #define IO 4
 #define NOTBIN -1
 
@@ -81,7 +33,10 @@
 #define INPUTRD 1 /* < */
 #define OUTPUTRD 3 /* > */
 
-
+//background process
+#define FORE 0
+#define BACK 1
+#define BACKPID -1
 
 struct PCMD
 {
@@ -90,13 +45,11 @@ struct PCMD
 	char *CMD3 [SIZE];
 	char *CMD4 [SIZE];
 	
-
-
+	/* Set to specify command type */
 	int redir_type;
+	int background;
 	int pipe_num;
 	int normal;
-	
-	int background;
 
 	/*number of args in each cmd*/
 	int bucNum1;
@@ -110,23 +63,46 @@ struct PCMD
 	int bin3;
 	int bin4;
 
-
+	//reference to background processes queue
+	pid_t * bqueue;
 };
 
-
-
+// parsed the command into tokens: PCMD struct
 void parse( char cmd [], struct PCMD * cmdstr);
-struct PCMD generateTestPCMD();
-char * enVar( char  Name [] , char Value []);
-void execute(struct PCMD);
-void exec_pipes(struct PCMD);
-void exec_builtIn(struct PCMD);
-void exec_redirect(struct PCMD);
-void prompt();
-char * path_res(char symbol []);
-char * commandPath(char *);
 
-//bool backgroundProcess(pid_t);
+// Gets and Sets environment variables
+char * enVar( char  Name [] , char Value []);
+
+// Path resolution for commands and symbols
+char * path_res(char symbol []);
+char * commandPath(char *); // internal path_res function for command path resolution
+
+//executes commands that contains redirection
+void exec_redirect(struct PCMD);
+
+//executes bultin commands
+void exec_builtin(struct PCMD);
+void etime(char **);	// internal exec_builtIn function for etime
+void echo(char **);		// internal exec_builtIn function for echo
+
+//executes commands that contains pipes
+void exec_pipes(struct PCMD);
+
+//calls wait for (fore/back)ground processes
+void call_wait(pid_t child, struct PCMD);
+int add_child(pid_t * queue, pid_t child);
+int remove_child(pid_t * queue, pid_t child);
+void resize_queue(pid_t * oldqueue);
+void printlastcmd(struct PCMD);
+
+//decides which exec_function to run based on commands type (PCMD values)
+void execute(struct PCMD);
+
+//provides user prompt functionality (calls and displays requires environmental variables)
+void prompt();
+
+
+
 
 
 

@@ -1,9 +1,6 @@
-#include <unistd.h>
 #include "functions.h"
 
-
 extern int memoryAlloc;
-
 
 char *  commandPath(char * cmd)
 {

@@ -1,10 +1,4 @@
-#include <unistd.h>
-#include <stdio.h>
 #include "functions.h"
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
 void exec_redirect(struct PCMD cmds)
 {
@@ -40,7 +34,7 @@ void exec_redirect(struct PCMD cmds)
 
 	else
 	{
-	 	wait(NULL);
+	 	call_wait(pid,cmds);
 	}
 }
 

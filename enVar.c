@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <errno.h>
+#include "functions.h"
 
 char * enVar( char namez [], char value [])
 {

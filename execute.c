@@ -1,12 +1,19 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h> 
 #include "functions.h"
 
 
 void execute(struct PCMD cmd)
 {
+
+    if (cmd.bin1 == 0)
+    {
+        printf("Exiting Shell...\n" );
+        exit(0);
+    }
+
+    //tempory fix for & in command
+    //if (cmd.background > 1)
+    cmd.CMD1[1] = NULL;
+
 	pid_t pid;
 
 	if((pid = fork()) == -1)
@@ -30,12 +37,17 @@ void execute(struct PCMD cmd)
         		return;
         	}
 
-            //printf("reached execution stage");
+            if (cmd.bin1 > 0)
+            {
+                exec_builtin(cmd);
+                return;
+            }
+
             execv(cmd.CMD1[0],cmd.CMD1);
         }
       else
         {
         	// parent thread waiting
-        	wait(NULL);
+        	call_wait(pid,cmd);
         }
 }

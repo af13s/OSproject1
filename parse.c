@@ -1,9 +1,4 @@
 #include "functions.h"
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
 
 void parse_whitespace(char*  line);
 void sepBych(char ch, char * line);
@@ -11,6 +6,7 @@ char* makearg(char * arg);
 char * check4bin(char* cmd, int * bintype);
 char *  commandPath(char*);
 extern int memoryAlloc;
+
 //int memoryAlloc = FALSE;
 
 /*

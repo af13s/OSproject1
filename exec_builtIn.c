@@ -1,40 +1,28 @@
+#include "functions.h"
+//built_in #define EXIT 0 // #define CD 1 // #define ECHO 2 // #define ETIM 3 // #define IO 4
 
-//built_in
-//#define EXIT 0
-//#define CD 1
-//#define ECHO 2
-//#define ETIME 3
-//#define IO 4
-
-void etime(char **); // function declaration
-
-void exec_builtIn(struct PCMD cmds)
+void exec_builtin(struct PCMD cmds)
 {
+   int success;
    
-	switch(cmds.built_in) 
+	switch(cmds.bin1) 
 	{
-
-      case  EXIT:
-         printf("Exiting Shell..." );
-         exit(0);
-         break;
-
       case CD :
-            int success = chdir(cmds.CMD2[0]);
+            success = chdir(cmds.CMD1[1]);
             if (success == -1)
-               printf("%s: No such file or directory.",cmds.CMD2[0]);
+               printf("%s: No such file or directory.\n",cmds.CMD2[0]);
       	break;
 
       case ECHO :
-         printf("%s", cmds.CMD2[0]);
+         printf("%s \n", cmds.CMD1[1]);
          break;
 
-      case ETIME:
+      case ETIM:
          etime(cmds.CMD2);
          break;
 
       case IO :
-         printf("Better try again\n" );
+         //printf("Better try again\n" );
          break;
 
       default :
@@ -46,18 +34,29 @@ void etime(char ** cmd)
 {
    struct timeval start;
    struct timeval end;
-   long double elapsed;
+   long double elapsed = 0;
+   pid_t pid;
+   int status;
 
    gettimeofday(&start, NULL);
 
-   if (fork() == 0)
+   if ((pid = fork()) == 0)
       execv(*cmd,cmd);
    else
-      wait(NULL);
+      {
+         waitpid(pid,&status,0);
+      }
 
    gettimeofday(&end, NULL);
 
+   
+
    elapsed = (end.tv_sec - start.tv_sec);
    elapsed += ((end.tv_usec - start.tv_usec) / (1000.0*1000.0));
-   printf("%LG",elapsed);
+   printf("%LG \n",elapsed);
 }
+
+//void echo(char **)
+//{
+   
+//}

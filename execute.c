@@ -13,11 +13,6 @@ void execute(struct PCMD cmd)
 
     //printf("backgroudn %d",cmd.background);
     //tempory fix for & in command
-
-    if (cmd.background >= 1)
-        cmd.CMD1[1] = NULL;
-    printf("pipes: %d\n", cmd.pipe_num);
-
 	pid_t pid;
 
 	if((pid = fork()) == -1)

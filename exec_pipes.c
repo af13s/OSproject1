@@ -1,9 +1,3 @@
-#include <unistd.h>
-#include <stdio.h>
-#include "functions.h"
-#include <stdlib.h>
-
-#define EXIT_FAILURE 1
 
 void exec_pipes(struct PCMD cmds)
 {

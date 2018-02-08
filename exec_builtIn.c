@@ -1,8 +1,3 @@
-#include "functions.h"
-#include <sys/time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
 
 //built_in
 //#define EXIT 0
@@ -11,7 +6,7 @@
 //#define ETIME 3
 //#define IO 4
 
-void etime(char **);
+void etime(char **); // function declaration
 
 void exec_builtIn(struct PCMD cmds)
 {
@@ -25,7 +20,9 @@ void exec_builtIn(struct PCMD cmds)
          break;
 
       case CD :
-         enVar("$PWD",cmds.CMD2[0]);
+            int success = chdir(cmds.CMD2[0]);
+            if (success == -1)
+               printf("%s: No such file or directory.",cmds.CMD2[0]);
       	break;
 
       case ECHO :

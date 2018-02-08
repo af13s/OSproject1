@@ -1,3 +1,63 @@
+#include "functions.h"
+#include <sys/time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#include <stdio.h>
+#include<sys/types.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "functions.h"
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <errno.h>
+
+#include <unistd.h>
+#include <stdio.h>
+#include "functions.h"
+#include <stdlib.h>
+
+#include <unistd.h>
+#include <stdio.h>
+#include "functions.h"
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <stdio.h>
+#include<sys/types.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "functions.h"
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+#include <stdio.h>
+#include<sys/types.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "functions.h"
+
+#include "functions.h"
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h> 
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "functions.h"
+
 #define SIZE 50
 
 //redir_type
@@ -18,14 +78,9 @@
 #define TRUE 1
 
 //inter command type
+#define INPUTRD 1 /* < */
+#define OUTPUTRD 3 /* > */
 
-	/* < */
-#define INPUTRD 1
-
-   /* > */
-#define OUTPUTRD 3
-
-#define PIPE 2
 
 
 struct PCMD

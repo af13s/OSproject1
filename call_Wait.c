@@ -14,11 +14,17 @@ void call_wait(pid_t child, struct PCMD cmds)
 	if (cmds.background == FORE) 		// FORE (0) == not background process
 	{
 		waitpid(child, &status, FORE);
+		
+		if (status > 0)
+		{
+			queue_num = remove_child(cmds.bqueue, child); 
+			printf("[%d]+  ", queue_num);
+			printlastcmd(cmds);
+		}
 	}
 	else
 	{
 		queue_num = add_child(cmds.bqueue, child);
-		//printf("[queue number] 	[pid]\n");
 		printf("[%d] 	[%d]\n",queue_num, child);
 
 		waitpid(-1, &status, WNOHANG);
@@ -26,7 +32,6 @@ void call_wait(pid_t child, struct PCMD cmds)
 		if (status > 0)
 		{
 			queue_num = remove_child(cmds.bqueue, child); 
-			//printf("[queue number]+ 	[cmd]\n");
 			printf("[%d]+  ", queue_num);
 			printlastcmd(cmds);
 		}

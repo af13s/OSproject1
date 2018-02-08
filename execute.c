@@ -16,6 +16,7 @@ void execute(struct PCMD cmd)
 
     if (cmd.background >= 1)
         cmd.CMD1[1] = NULL;
+    printf("pipes: \n", cmd.pipe_num);
 
 	pid_t pid;
 

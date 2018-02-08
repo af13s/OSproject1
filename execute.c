@@ -10,8 +10,6 @@ void execute(struct PCMD cmd)
         exit(0);
     }
 
-    //printf("backgroudn %d",cmd.background);
-    //tempory fix for & in command
 	pid_t pid;
 
 	if((pid = fork()) == -1)
@@ -25,7 +23,7 @@ void execute(struct PCMD cmd)
         	//int redir_type, int pipe_num, normal, built_in, background
         	if (cmd.redir_type != 0)
         	{
-        		//exec_redirect(cmd);
+        		exec_redirect(cmd);
         		return;
         	}
 

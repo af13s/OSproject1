@@ -10,9 +10,12 @@ void execute(struct PCMD cmd)
         exit(0);
     }
 
+
+    //printf("backgroudn %d",cmd.background);
     //tempory fix for & in command
-    //if (cmd.background > 1)
-    cmd.CMD1[1] = NULL;
+
+    if (cmd.background >= 1)
+        cmd.CMD1[1] = NULL;
 
 	pid_t pid;
 

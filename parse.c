@@ -86,6 +86,7 @@ void parse(char cmd [], struct PCMD * cstruct )
   
    ecp = cmd + strlen(cmd) + 1;
    cstruct->pipe_num = 0;
+   cstruct->background =0;
 
    for(i = 0; cmd[i]; i++)
    {

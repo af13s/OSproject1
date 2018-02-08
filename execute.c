@@ -10,7 +10,6 @@ void execute(struct PCMD cmd)
         exit(0);
     }
 
-
     //printf("backgroudn %d",cmd.background);
     //tempory fix for & in command
 	pid_t pid;
@@ -42,7 +41,7 @@ void execute(struct PCMD cmd)
                 return;
             }
 
-            execv(cmd.CMD1[0],cmd.CMD1);
+            //execv(cmd.CMD1[0],cmd.CMD1);
         }
       else
         {

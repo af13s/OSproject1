@@ -3,7 +3,7 @@
 void exec_pipes(struct PCMD cmds)
 {
 	char **cm[5] = {NULL, NULL, NULL, NULL, NULL};
-
+  printf("is this running");
   int i;
   
   //setting char pointer pointers to each command that exists

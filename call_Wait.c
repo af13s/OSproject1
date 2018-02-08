@@ -10,7 +10,6 @@ void call_wait(pid_t child, struct PCMD cmds)
 {	
 	int queue_num = 0;
 	int status;
-	pid_t ret;
 
 	if (cmds.background == FORE) 		// FORE (0) == not background process
 	{

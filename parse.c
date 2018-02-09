@@ -95,8 +95,11 @@ void parse(char cmd [], struct PCMD * cstruct )
    			cstruct->redir_type = IN;
    		else if (cmd[i] == '>')
    			cstruct->redir_type = OUT;
-   		else if(cmd[i] == '&')
+   		else if(cmd[i] == '&' && !cmd[i+1])
+   		{
+   			cmd[i] = ' ';
    			cstruct->background++;
+   		}
    		else if(cmd[i] == '|')
    			cstruct->pipe_num++;
    		
@@ -144,15 +147,41 @@ void parse(char cmd [], struct PCMD * cstruct )
    cstruct->CMD3[0] = check4bin(cstruct->CMD3[0],&cstruct->bin3);
    cstruct->CMD4[0] = check4bin(cstruct->CMD4[0],&cstruct->bin4);
 
+   /*check for path expansion*/
 
 
+  // for(i = 1; i < cstruct->bucNum1; i++)
+printf("%s: %p\n",cstruct->CMD1[1],cstruct->CMD1[1] );
+   	if(cstruct->bin1 == CD)
+   		cstruct->CMD1[1] = expandCD(cstruct->CMD1[1]);
+
+ 	printf("%s\n",cstruct->CMD1[1]);
+
+/*
+   for(i = 1; i < cstruct->bucNum2; i++)
+   		cstruct->CMD2[i] = expandCD(cstruct->CMD2[i]);
+
+   for(i = 1; i < cstruct->bucNum3; i++)
+   		cstruct->CMD3[i] = expandCD(cstruct->CMD3[i]);
+
+   for(i = 1; i < cstruct->bucNum4; i++)
+   		cstruct->CMD4[i] = expandCD(cstruct->CMD4[i]);
+*/
 }
 
 
 void parse_whitespace(char* line)
 {
 
+
 	int i = 0,j = 0;
+
+	/* ignore & before command*/
+	while(isspace(line[i]))
+		i++;
+	if(line[i] == '&')
+		line[i] = ' ';
+	i = 0;
 
 	/*Removing leading white space*/
 	
@@ -172,6 +201,9 @@ void parse_whitespace(char* line)
 
 
 	line[strlen(line) - j] = '\0';
+
+
+
 
 	/* Remove spaces in between */
 

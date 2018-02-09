@@ -7,8 +7,10 @@ void execute(struct PCMD cmd)
     struct timeval start;
     struct timeval end;
     double elapsed = 0;
-
+    int status;
+    int retur;
     pid_t pid;
+    int queue_num;
 
 
     if (cmd.bin1 == 0)
@@ -16,6 +18,9 @@ void execute(struct PCMD cmd)
         printf("Exiting Shell...\n" );
         exit(0);
     }
+
+    if (cmd.background >= 1)
+        cmd.CMD1[2] = NULL;
 
     gettimeofday(&start, NULL);
 	
@@ -63,7 +68,6 @@ void execute(struct PCMD cmd)
                 elapsed += ((end.tv_usec - start.tv_usec) / (1000.0*1000.0));
                 printf("%lf \n",elapsed);
             }
-        }
 
-        
-} 
+        }   
+}

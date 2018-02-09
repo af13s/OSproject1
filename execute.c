@@ -6,9 +6,10 @@ void execute(struct PCMD cmd)
 
     struct timeval start;
     struct timeval end;
-    long double elapsed = 0;
-    
-    int status;
+    double elapsed = 0;
+
+    pid_t pid;
+
 
     if (cmd.bin1 == 0)
     {
@@ -17,8 +18,7 @@ void execute(struct PCMD cmd)
     }
 
     gettimeofday(&start, NULL);
-	pid_t pid;
-
+	
 	if((pid = fork()) == -1)
         {
           printf("Error creating child in execute");
@@ -39,10 +39,9 @@ void execute(struct PCMD cmd)
 
             if (cmd.bin1 == ETIM)
             {   
-                char * cmds[] = {"/bin/sleep", "20", NULL};
-                int ret = execv(cmds[0],cmds);
-                printf("%d\n",ret);
-                return;
+                cmd.CMD1[1] = commandPath(cmd.CMD1[1]);
+                char ** basecommand = &cmd.CMD1[1];
+                int ret = execv(basecommand[0],basecommand);
             }
 
             if (cmd.bin1 > 0)
@@ -51,21 +50,20 @@ void execute(struct PCMD cmd)
                 return;
             }
 
-
             execv(cmd.CMD1[0],cmd.CMD1);
         }
       else
         {
-        	//call_wait(pid,cmd);
-            waitpid(pid, &status, FORE);
-            printf("%d", cmd.bin1);
-        }
+        	call_wait(pid,cmd);
 
-        if (cmd.bin1 == ETIM)
+            if (cmd.bin1 == ETIM)
             {
                 gettimeofday(&end, NULL);
                 elapsed = (end.tv_sec - start.tv_sec);
                 elapsed += ((end.tv_usec - start.tv_usec) / (1000.0*1000.0));
-                printf("%LG \n",elapsed);
+                printf("%lf \n",elapsed);
             }
-}
+        }
+
+        
+} 

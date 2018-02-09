@@ -8,18 +8,17 @@ void execute(struct PCMD cmd)
     struct timeval end;
     double elapsed = 0;
 
+    pid_t pid;
+
+
     if (cmd.bin1 == 0)
     {
         printf("Exiting Shell...\n" );
         exit(0);
     }
 
-    if (cmd.background >= 1)
-        cmd.CMD1[1] = NULL;
-
     gettimeofday(&start, NULL);
-	pid_t pid;
-
+	
 	if((pid = fork()) == -1)
         {
           printf("Error creating child in execute");
@@ -43,8 +42,6 @@ void execute(struct PCMD cmd)
                 cmd.CMD1[1] = commandPath(cmd.CMD1[1]);
                 char ** basecommand = &cmd.CMD1[1];
                 int ret = execv(basecommand[0],basecommand);
-                printf("%d\n",ret);
-                return;
             }
 
             if (cmd.bin1 > 0)

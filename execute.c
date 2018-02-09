@@ -4,23 +4,27 @@
 void execute(struct PCMD cmd)
 {
 
+    struct timeval start;
+    struct timeval end;
+    double elapsed = 0;
+
+    pid_t pid;
+
+
     if (cmd.bin1 == 0)
     {
         printf("Exiting Shell...\n" );
         exit(0);
     }
 
-	pid_t pid;
-
+    gettimeofday(&start, NULL);
+	
 	if((pid = fork()) == -1)
         {
           printf("Error creating child in execute");
         }
       else if (pid == 0)
         {
-            //printf("child was created");
-          //Execute command in new process
-        	//int redir_type, int pipe_num, normal, built_in, background
         	if (cmd.redir_type != 0)
         	{
         		exec_redirect(cmd);
@@ -33,6 +37,13 @@ void execute(struct PCMD cmd)
         		return;
         	}
 
+            if (cmd.bin1 == ETIM)
+            {   
+                cmd.CMD1[1] = commandPath(cmd.CMD1[1]);
+                char ** basecommand = &cmd.CMD1[1];
+                int ret = execv(basecommand[0],basecommand);
+            }
+
             if (cmd.bin1 > 0)
             {
                 exec_builtin(cmd);
@@ -43,7 +54,16 @@ void execute(struct PCMD cmd)
         }
       else
         {
-        	// parent thread waiting
         	call_wait(pid,cmd);
+
+            if (cmd.bin1 == ETIM)
+            {
+                gettimeofday(&end, NULL);
+                elapsed = (end.tv_sec - start.tv_sec);
+                elapsed += ((end.tv_usec - start.tv_usec) / (1000.0*1000.0));
+                printf("%lf \n",elapsed);
+            }
         }
-}
+
+        
+} 

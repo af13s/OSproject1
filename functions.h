@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <ctype.h>
 
+//standard size throughout
 #define SIZE 50
 
 //redir_type
@@ -38,6 +39,7 @@
 #define BACK 1
 #define BACKPID -1
 
+//tokens for parsed command
 struct PCMD
 {
 	char *CMD1 [SIZE];
@@ -65,6 +67,8 @@ struct PCMD
 
 	//reference to background processes queue
 	pid_t * bqueue;
+	char * bgcmds[10];
+	int * bgcount;
 };
 
 // parsed the command into tokens: PCMD struct
@@ -93,7 +97,7 @@ void call_wait(pid_t child, struct PCMD);
 int add_child(pid_t * queue, pid_t child);
 int remove_child(pid_t * queue, pid_t child);
 void resize_queue(pid_t * oldqueue);
-void printlastcmd(struct PCMD);
+void printcmd(struct PCMD, int);
 
 //decides which exec_function to run based on commands type (PCMD values)
 void execute(struct PCMD);

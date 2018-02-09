@@ -8,33 +8,40 @@
 void call_wait(pid_t child, struct PCMD cmds)
 {	
 	int queue_num = 0;
-	int child_state =-1;
+	int child_state;
 	int i;
+	int ret;
 
 	if (cmds.background == FORE)		// FORE (0) == not background process
 	{
-		waitpid(child, NULL, FORE);
+		ret = waitpid(child, NULL, FORE);
+
+		for(i=1; i < cmds.bqueue[0];i++)
+		{
+			if (ret == cmds.bqueue[i])
+			{
+				queue_num = remove_child(cmds.bqueue,ret);
+				printf("[%d]+	\n",queue_num);
+				printcmd(cmds,*cmds.bgcount);
+				cmds.bgcmds[queue_num] = NULL;
+			}
+		}
 	}
 	else
 	{
 		queue_num = add_child(cmds.bqueue, child);
 		printf("[%d] 	[%d]\n",queue_num, child);
 
-		waitpid(-1, &child_state, WNOHANG);
-	}
-
-	for(i=1; i < cmds.bqueue[0];i++)
-	{
-		int ret;
-		ret = waitpid(cmds.bqueue[i], &child_state, WNOHANG);
-		printf("return status: %d childstate:%d	",ret, child_state);
-		printf("pid: %d\n",cmds.bqueue[i]);
+		ret = waitpid(-1, &child_state, WNOHANG);
+		//printf("i: %d return status: %d childstate:%d	",i,ret, child_state);
+		//printf("i: %d 	pid: %d\n",i,cmds.bqueue[i]);
 
 		if (ret > 0)
-		{
-			remove_child(cmds.bqueue,ret);
-			printf("[%d]	",queue_num, child);
-			printlastcmd(cmds);
+		{	
+			queue_num = remove_child(cmds.bqueue,ret);
+			printf("[%d]+	",queue_num);
+			printcmd(cmds,*cmds.bgcount);
+			cmds.bgcmds[queue_num] = NULL;
 		}
 	}
 }
@@ -51,6 +58,8 @@ int add_child(pid_t * queue, pid_t child)
 			queue[i] = child;
 			return i;
 		}
+
+	return 0;
 }
 
 int remove_child(pid_t * queue, pid_t child)
@@ -62,6 +71,8 @@ int remove_child(pid_t * queue, pid_t child)
 			queue[i] = 0;
 			return i;
 		}
+
+	return 0;
 }
 
 void resize_queue(pid_t * oldqueue)
@@ -79,27 +90,11 @@ void resize_queue(pid_t * oldqueue)
 	oldqueue = newqueue;
 }
 
-void printlastcmd(struct PCMD pcmd)
+void printcmd(struct PCMD pcmd,int queue_num)
 {
 	printf("[");
-	char ** cmd [] = {pcmd.CMD4,pcmd.CMD3,pcmd.CMD2,pcmd.CMD1};
-
-	int i;
-	int j = 0;
-
-	for (i = 0; i < 4; i++)
-	{
-		if (cmd[i][0] == NULL)
-			continue;
-		else
-			while(cmd[i][j] != NULL)
-				{
-					printf(" %s " , cmd[i][j]);
-					j++;
-				}
-			printf("] \n");
-			break;
-	}
+	printf("%s",pcmd.bgcmds[queue_num]);
+	printf("]\n");
 }
 
 

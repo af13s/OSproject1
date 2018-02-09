@@ -76,6 +76,7 @@ char * enVar( char  Name [] , char Value []);
 // Path resolution for commands and symbols
 char * path_res(char symbol []);
 char * commandPath(char *); // internal path_res function for command path resolution
+char * expandCD(char*);
 
 //executes commands that contains redirection
 void exec_redirect(struct PCMD);
@@ -100,9 +101,5 @@ void execute(struct PCMD);
 
 //provides user prompt functionality (calls and displays requires environmental variables)
 void prompt();
-
-
-
-
 
 

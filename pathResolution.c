@@ -1,6 +1,15 @@
+#include <unistd.h>
 #include "functions.h"
+/*
+Assumptions in this file:
+
+The length of $PATH is less that 500 characters
+The length of each path is less than 200 characters
+
+*/
 
 extern int memoryAlloc;
+
 
 char *  commandPath(char * cmd)
 {
@@ -48,7 +57,6 @@ char *  commandPath(char * cmd)
 	
 }
 
-
 char * expandCD(char * arg)
 {
 
@@ -67,44 +75,41 @@ int templen = 0;
 char * temp = NULL;
 int back = -1;
 int i = 0;
-char * tempr = arg;
+
 strcpy(temppwd,pwd);
 
-if(arglen >= 1)
+if(arglen > 1)
 {
 
-	if(arg[0] == '~')
+	if(arg[0] == '~' && arg[1] == '/')
 		back = 0; /*means a home dir*/
 
-	else if(arglen >= 2 && arg[0] == '.' && arg[1] == '.')
+	else if(arglen > 2 && arg[0] == '.' && arg[1] == '.' && arg[2] == '/')
 	{
 		back = 1;
 		for(ptr = temppwd + pwdlen; *ptr != '/'; ptr--);
-		*++ptr = '\0';
+		*ptr = '\0';
 	}
 }
 
-if(back == 0)
+if(back = 0)
 {
 	if(arg)
 		free(arg);
-	arg = (char *)malloc(homelen + 1);
+	arg = malloc(homelen + 1);
 
 	strcpy(arg,home);
-	printf("INEXP%s\n", arg);
 }
 else if(back == 1)
 {
 	if(arg)
 		free(arg);
 
-	arg = (char *)malloc(strlen(temppwd) + 1);
+	arg = malloc(strlen(temppwd) + 1);
 	strcpy(arg,temppwd);
-
-	printf("INEXP%s\n",arg );
 }
 
 
-return arg;
+
 
 }

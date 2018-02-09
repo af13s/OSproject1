@@ -151,22 +151,10 @@ void parse(char cmd [], struct PCMD * cstruct )
 
 
   // for(i = 1; i < cstruct->bucNum1; i++)
-printf("%s: %p\n",cstruct->CMD1[1],cstruct->CMD1[1] );
-   	if(cstruct->bin1 == CD)
+
+  	if(cstruct->bin1 == CD)
    		cstruct->CMD1[1] = expandCD(cstruct->CMD1[1]);
 
- 	printf("%s\n",cstruct->CMD1[1]);
-
-/*
-   for(i = 1; i < cstruct->bucNum2; i++)
-   		cstruct->CMD2[i] = expandCD(cstruct->CMD2[i]);
-
-   for(i = 1; i < cstruct->bucNum3; i++)
-   		cstruct->CMD3[i] = expandCD(cstruct->CMD3[i]);
-
-   for(i = 1; i < cstruct->bucNum4; i++)
-   		cstruct->CMD4[i] = expandCD(cstruct->CMD4[i]);
-*/
 }
 
 

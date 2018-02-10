@@ -212,7 +212,7 @@ void parse_whitespace(char* line)
 	sepBych('<',line);
 	sepBych('>',line);
 	sepBych('&',line);
-	sepBych('~',line);
+//	sepBych('~',line);
 
 }
 
@@ -247,23 +247,46 @@ void sepBych(char ch, char * line)
 
 char * makearg(char * arg)
 {
-	memoryAlloc = TRUE;
-	char * temp = NULL;
-	char * storage;
-	
-	if(arg[0] == '$' && arg[1])
-		temp = enVar(arg,NULL);
+   memoryAlloc = TRUE;
+   char * temp = NULL;
+   char * storage;
+   char * rest = NULL;
+   int i = 0;
 
-	if(temp)
-	{
-		storage = (char *)malloc(strlen(temp) + 1);
-		strcpy(storage,temp);
-		return storage;
-	}
-	
-	storage = (char *)malloc(strlen(arg) + 1);
-   	strcpy(storage,arg);
-   	return storage;
+   if(arg[0] == '$' && arg[1])
+   {
+
+      for(i = 0;arg[i]; i++)
+      {
+         if(arg[i] == '/' && arg[i+1])
+         {
+            arg[i] = '\0';
+            rest = arg + i+1;
+            break;
+         }
+      } 
+      temp = enVar(arg,NULL);
+      
+   }
+   if(temp && !rest)
+   {
+      storage = (char *)calloc(strlen(temp) + 1,1);
+      strcpy(storage,temp);
+      return storage;
+   }
+   if(temp && rest)
+   {
+      storage = (char*)calloc(strlen(temp) + strlen(rest) + 2,1);
+      strcpy(storage,temp);
+      strcat(storage,"/");
+      strcat(storage,rest);
+      printf("%s\n",storage);
+      return storage;
+   }
+
+   storage = (char *)malloc(strlen(arg) + 1);
+   strcpy(storage,arg);
+   return storage;
 }
 
 char * check4bin(char * cmd,int * bintype)

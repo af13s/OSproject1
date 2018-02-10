@@ -9,8 +9,15 @@ void exec_builtin(struct PCMD cmds)
 	{
       case CD :
             success = chdir(cmds.CMD1[1]);
+         
             if (success == -1)
-               printf("%s: No such file or directory.\n",cmds.CMD2[0]);
+            {
+               printf("%s: No such file or directory.\n",cmds.CMD1[1]);
+            }
+            else
+            {
+               enVar("$PWD",cmds.CMD1[1]);
+            }
       	break;
 
       case ECHO :

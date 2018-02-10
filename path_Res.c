@@ -52,59 +52,108 @@ char *  commandPath(char * cmd)
 char * expandCD(char * arg)
 {
 
-int arglen = strlen(arg);
+   int arglen = strlen(arg);
 
-char * pwd = enVar("$PWD",NULL);
-int pwdlen = strlen(pwd);
-char * home = enVar("$HOME",NULL);
-int homelen = strlen(home);
+   char * pwd = enVar("$PWD",NULL);
+   int pwdlen = strlen(pwd);
+   char * home = enVar("$HOME",NULL);
+   int homelen = strlen(home);
 
-char temppwd[250];
-
-char * parent = NULL;
-char * ptr;
-int templen = 0;
-char * temp = NULL;
-int back = -1;
-int i = 0;
-char * tempr = arg;
-strcpy(temppwd,pwd);
-
-if(arglen >= 1)
-{
-
-	if(arg[0] == '~')
-		back = 0; /*means a home dir*/
-
-	else if(arglen >= 2 && arg[0] == '.' && arg[1] == '.')
-	{
-		back = 1;
-		for(ptr = temppwd + pwdlen; *ptr != '/'; ptr--);
-		*++ptr = '\0';
-	}
-}
-
-if(back == 0)
-{
-	if(arg)
-		free(arg);
-	arg = (char *)malloc(homelen + 1);
-
-	strcpy(arg,home);
-	printf("INEXP%s\n", arg);
-}
-else if(back == 1)
-{
-	if(arg)
-		free(arg);
-
-	arg = (char *)malloc(strlen(temppwd) + 1);
-	strcpy(arg,temppwd);
-
-	printf("INEXP%s\n",arg );
-}
+   char temppwd[250];
+   strcpy(temppwd,arg);
+   char * parent = NULL;
+   char * ptr;
+   int templen = 0;
+   char * temp = NULL;
+   int back = -1;
+   int i = 0;
+   char * tempr = arg;
+   
+   
+   char targ[250];
+   strcpy(targ,arg);
 
 
-return arg;
+   int ndir = 1;
+   char * rest = NULL;
+   char first[50];
+   
+   
+
+   
+   for(i=0;targ[i];i++)
+   {
+      if(targ[i] == '/')
+      {   
+         if(targ[i + 1] != '\0')
+         {
+            rest = targ + i + 1;
+         
+         }
+
+         
+         break;
+         
+      }
+   }
+
+
+   if(arglen >= 1)
+   {
+
+      if(arg[0] == '~')
+         back = 0; /*means a home dir*/
+
+      else if(arglen >= 2 && arg[0] == '.' && arg[1] == '.')
+      {
+         back = 1;
+         for(ptr = temppwd + pwdlen; *ptr != '/'; ptr--);
+         *++ptr = '\0';
+      }
+      
+   }
+
+   if(back == 0)
+   {
+      if(arg)
+         free(arg);
+      if(rest)
+      {
+         arg = (char *)calloc(homelen + strlen(rest) + 2,1);
+         strcpy(arg,home);
+         strcat(arg,"/");
+         strcat(arg,rest);
+         return arg;
+      }
+      else
+      {
+         arg = (char *)malloc(homelen + 1);
+         strcpy(arg,home);
+         return arg;
+      }
+      
+   }
+   else if(back == 1)
+   {
+      if(arg)
+         free(arg);
+       if(rest)
+      {
+         arg = (char *)calloc(strlen(temppwd) + strlen(rest) + 2,1);
+         strcpy(arg,temppwd);
+         strcat(arg,"/");
+         strcat(arg,rest);
+         return arg;
+      }
+      else
+      {
+         arg = (char *)malloc(strlen(temppwd) + 1);
+         strcpy(arg,temppwd);
+         return arg;
+      }
+   }
+
+
+   return arg;
 
 }

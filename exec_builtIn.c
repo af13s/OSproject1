@@ -35,8 +35,8 @@ void exec_builtin(struct PCMD cmds)
         {
               cmds.CMD1[1] = commandPath(cmds.CMD1[1]);
               char ** basecommand = &cmds.CMD1[1];
+              close(1);
             	execv(*basecommand, basecommand); // child executes command
-              printf("%s",cmds.CMD1[0]);
 		          exit(1); // exits
         }
         else

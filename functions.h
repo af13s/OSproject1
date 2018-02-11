@@ -109,4 +109,6 @@ void execute(struct PCMD);
 //provides user prompt functionality (calls and displays requires environmental variables)
 void prompt();
 
+void exit_shell(struct PCMD);
+
 

@@ -79,36 +79,53 @@ void parse(char cmd [], struct PCMD * cstruct )
       tempBucket[i] = NULL;
    }
 
-   parse_whitespace(cmd);
-   
+      
    char * sp, * ecp, *tempp;
 
+  parse_whitespace(cmd);
   
-   ecp = cmd + strlen(cmd) + 1;
+   
    cstruct->pipe_num = 0;
    cstruct->background =0;
    cstruct->redir_type=0;
 
+
+   
+
+   
    for(i = 0; cmd[i]; i++)
    {
+   		
    		if(cmd[i] == '<')
    			cstruct->redir_type = IN;
    		else if (cmd[i] == '>')
    			cstruct->redir_type = OUT;
-   		else if(cmd[i] == '&' && !cmd[i+1])
+   		else if(cmd[i] == '&' && i > 0 )
    		{
    			cmd[i] = ' ';
    			cstruct->background++;
    		}
+   		else if(cmd[i] =='&' && i == 0)
+   		{
+   			cmd[i] = ' ';
+   			
+   		}
    		else if(cmd[i] == '|')
    			cstruct->pipe_num++;
    		
+   }
+	parse_whitespace(cmd);
+
+	ecp = cmd + strlen(cmd) + 1;
+   
+   for(i = 0;cmd[i]; i++)
+   {
    		if(cmd[i] == ' ')
    		{
    			cmd[i] = '\0';
    		}
    }
-
+      
    for(sp = tempp = cmd; tempp != ecp; tempp++ )
    {
 
@@ -147,13 +164,13 @@ void parse(char cmd [], struct PCMD * cstruct )
    cstruct->CMD3[0] = check4bin(cstruct->CMD3[0],&cstruct->bin3);
    cstruct->CMD4[0] = check4bin(cstruct->CMD4[0],&cstruct->bin4);
 
+   
    /*check for path expansion*/
-
-
-  // for(i = 1; i < cstruct->bucNum1; i++)
 
   	if(cstruct->bin1 == CD)
    		cstruct->CMD1[1] = expandCD(cstruct->CMD1[1]);
+
+ 
 
 }
 
@@ -196,7 +213,7 @@ void parse_whitespace(char* line)
 	/* Remove spaces in between */
 
 	i = j = 0 ;
-	for(i; line[i] != '\0'; i++)
+	for(i =0; line[i] != '\0'; i++)
 	{
 		if(!isspace(line[i]) || ( i > 0 && !isspace(line[i - 1])) )
 		{
@@ -211,8 +228,8 @@ void parse_whitespace(char* line)
 	sepBych('|',line);
 	sepBych('<',line);
 	sepBych('>',line);
-	sepBych('&',line);
-//	sepBych('~',line);
+	
+
 
 }
 
@@ -280,11 +297,10 @@ char * makearg(char * arg)
       strcpy(storage,temp);
       strcat(storage,"/");
       strcat(storage,rest);
-      printf("%s\n",storage);
       return storage;
    }
 
-   storage = (char *)malloc(strlen(arg) + 1);
+   storage = (char *)calloc(strlen(arg) + 1,1);
    strcpy(storage,arg);
    return storage;
 }

@@ -14,9 +14,6 @@ void execute(struct PCMD cmd)
     int ret;
     int i;
 
-    if (cmd.background >= 1)
-        cmd.CMD1[2] = NULL;
-
     //check status for completed children
     for(i=1; i < cmd.bqueue[0];i++)
     {
@@ -30,21 +27,6 @@ void execute(struct PCMD cmd)
             printcmd(cmd,queue_num);
             removebgcmd(queue_num,cmd);
         }
-    }
-
-    if (cmd.bin1 == 0)
-    {
-        for(i=1; i < cmd.bqueue[0];i++)
-            if (cmd.bqueue[i] != 0)
-            {
-               while (waitpid(cmd.bqueue[i],&status,0) == 0);
-               printf("[%d]+   ",i);
-               printcmd(cmd,i);
-               removebgcmd(queue_num,cmd);
-            }
-
-        printf("Exiting Shell...\n" );
-        exit(0);
     }
 
     gettimeofday(&start, NULL);

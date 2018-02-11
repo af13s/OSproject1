@@ -14,6 +14,7 @@ void exec_redirect(struct PCMD cmds)
 	    if (cmds.redir_type == IN)
 	    {
 	    	fd = open(cmds.CMD2[0], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+	    	close(1);
 	        dup2(fd,STDIN_FILENO);
 	        close(fd);
 	    }
@@ -21,6 +22,7 @@ void exec_redirect(struct PCMD cmds)
 	    if (cmds.redir_type == OUT)
 	    {
 	    	fd = open(cmds.CMD2[0], O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	    	close(1);
 	        dup2(fd,STDOUT_FILENO);
 	        close(fd);
 	    }

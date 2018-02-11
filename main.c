@@ -5,7 +5,7 @@ int memoryAlloc = FALSE;
 int main()
 {
   
-  char input_line [256];
+  char input_line [256] = {0};
   pid_t * bqueue = (pid_t*) calloc(25, sizeof(pid_t));  // background process queue
   char ** bgcmds = (char **) calloc(25, sizeof(char*)); // background process command name
   char * originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char)); // store the original command
@@ -13,6 +13,7 @@ int main()
 
   while(1)
   {
+    memset ( input_line, 0, 256 );
     struct PCMD parsed; // PCMD stands for parsed command, contains tokens and descriptors
     parsed.bqueue = bqueue;
 

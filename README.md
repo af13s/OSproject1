@@ -86,6 +86,7 @@ Assumptions:
 Division of Labor:
 ==================
 Andrew Florial
+- Main
 - Enviromental Variables
 - Prompt
 - Execution

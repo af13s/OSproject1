@@ -34,8 +34,6 @@ void call_wait(pid_t child, struct PCMD cmds)
 		addbgcmd(queue_num,cmds);
 
 		ret = waitpid(-1, &child_state, WNOHANG);
-		//printf("i: %d return status: %d childstate:%d	",i,ret, child_state);
-		//printf("i: %d 	pid: %d\n",i,cmds.bqueue[i]);
 
 		if (ret > 0)
 		{	

@@ -68,7 +68,7 @@ struct PCMD
 	//reference to background processes queue
 	pid_t * bqueue;
 	char * bgcmds[10];
-	int * bgcount;
+	char * originalcmd;
 };
 
 // parsed the command into tokens: PCMD struct
@@ -99,6 +99,8 @@ int add_child(pid_t * queue, pid_t child);
 int remove_child(pid_t * queue, pid_t child);
 void resize_queue(pid_t * oldqueue);
 void printcmd(struct PCMD, int);
+void addbgcmd(int, struct PCMD);
+void removebgcmd(int,struct PCMD);
 
 //decides which exec_function to run based on commands type (PCMD values)
 void execute(struct PCMD);

@@ -23,7 +23,6 @@ void call_wait(pid_t child, struct PCMD cmds)
 				queue_num = remove_child(cmds.bqueue,ret);
 				printf("[%d]+	\n",queue_num);
 				printcmd(cmds,*cmds.bgcount);
-				cmds.bgcmds[queue_num] = NULL;
 			}
 		}
 	}
@@ -31,6 +30,7 @@ void call_wait(pid_t child, struct PCMD cmds)
 	{
 		queue_num = add_child(cmds.bqueue, child);
 		printf("[%d] 	[%d]\n",queue_num, child);
+		addbgcmd(queue_num,cmds);
 
 		ret = waitpid(-1, &child_state, WNOHANG);
 		//printf("i: %d return status: %d childstate:%d	",i,ret, child_state);
@@ -41,7 +41,6 @@ void call_wait(pid_t child, struct PCMD cmds)
 			queue_num = remove_child(cmds.bqueue,ret);
 			printf("[%d]+	",queue_num);
 			printcmd(cmds,*cmds.bgcount);
-			cmds.bgcmds[queue_num] = NULL;
 		}
 	}
 }
@@ -75,6 +74,18 @@ int remove_child(pid_t * queue, pid_t child)
 	return 0;
 }
 
+void addbgcmd(int queue_num,struct PCMD pcmd)
+{
+	pcmd.bgcmds[queue_num] = pcmd.originalcmd;
+}
+
+void removebgcmd(int queue_num,struct PCMD pcmd)
+{
+	free(pcmd.bgcmds[queue_num]);
+	pcmd.bgcmds[queue_num] = NULL;
+}
+
+
 void resize_queue(pid_t * oldqueue)
 {
 	pid_t *newqueue = (pid_t*) calloc((oldqueue[0]*2), sizeof(pid_t));
@@ -90,7 +101,7 @@ void resize_queue(pid_t * oldqueue)
 	oldqueue = newqueue;
 }
 
-void printcmd(struct PCMD pcmd,int queue_num)
+void printcmd(struct PCMD pcmd, int queue_num)
 {
 	printf("[");
 	printf("%s",pcmd.bgcmds[queue_num]);

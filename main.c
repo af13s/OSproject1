@@ -8,7 +8,6 @@ int main()
   char input_line [256];
   pid_t * bqueue = (pid_t*) calloc(10, sizeof(pid_t));
   bqueue[0] = 10;
-  int bgcount =1;
 
   while(1)
   {
@@ -16,18 +15,9 @@ int main()
     parsed.bqueue = bqueue;
     prompt();
     fgets(input_line, 255, stdin);
+    parsed.originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char));
+    strcpy(parsed.originalcmd,input_line);
     parse(input_line, &parsed);
-
-    parsed.bgcount = &bgcount;
-    int i;
-
-    if (parsed.background >= 1)
-    {
-      parsed.bgcmds[*parsed.bgcount] = (char*) calloc(strlen(input_line), sizeof(char*));
-      strcpy(parsed.bgcmds[*parsed.bgcount],input_line);
-      //printf("parsed.bgcmds: %s",parsed.bgcmds[i]);
-    }
-
     execute(parsed);
   }
 

@@ -14,7 +14,6 @@ void exec_redirect(struct PCMD cmds)
 	    if (cmds.redir_type == IN)
 	    {
 	    	fd = open(cmds.CMD2[0], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-	        //close(STDIN_FILENO);
 	        dup2(fd,STDIN_FILENO);
 	        close(fd);
 	    }
@@ -23,11 +22,10 @@ void exec_redirect(struct PCMD cmds)
 	    {
 	    	fd = open(cmds.CMD2[0], O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	        dup2(fd,STDOUT_FILENO);
-	        //close(STDOUT_FILENO); //not sure of this line may work without
 	        close(fd);
 	    }
 
-	    execv(cmds.CMD1[0], cmds.CMD1);   // Or your preferred alternative
+	    execv(cmds.CMD1[0], cmds.CMD1);
 	    printf("Failed to exec %s\n", cmds.CMD1[0]);
 	    exit(1); 
 	}

@@ -39,18 +39,21 @@ void execute(struct PCMD cmd)
         {
         	if (cmd.redir_type != 0)
         	{
+                // handles redirection
         		exec_redirect(cmd);
         		return;
         	}
 
         	if (cmd.pipe_num > 0)
         	{
+                // handles piping
         		exec_pipes(cmd);
         		return;
         	}
 
             if (cmd.bin1 == ETIM)
             {   
+                //handles etime built-in
                 cmd.CMD1[1] = commandPath(cmd.CMD1[1]);
                 char ** basecommand = &cmd.CMD1[1];
                 int ret = execv(basecommand[0],basecommand);
@@ -58,6 +61,7 @@ void execute(struct PCMD cmd)
 
             if (cmd.bin1 > 0)
             {
+                //handles more builtins
                 exec_builtin(cmd);
                 return;
             }

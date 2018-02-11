@@ -6,19 +6,22 @@ int main()
 {
   
   char input_line [256];
-  pid_t * bqueue = (pid_t*) calloc(25, sizeof(pid_t));
-  char ** bgcmds = (char **) calloc(25, sizeof(char*));
-  char * originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char));
+  pid_t * bqueue = (pid_t*) calloc(25, sizeof(pid_t));  // background process queue
+  char ** bgcmds = (char **) calloc(25, sizeof(char*)); // background process command name
+  char * originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char)); // store the original command
   bqueue[0] = 25;
 
   while(1)
   {
-    struct PCMD parsed;
+    struct PCMD parsed; // PCMD stands for parsed command, contains tokens and descriptors
     parsed.bqueue = bqueue;
-    prompt();
+
+    prompt(); // displays prompt based on environmental variabls
+
     fgets(input_line, 255, stdin);
-    parsed.originalcmd = originalcmd;
-    parsed.bgcmds = bgcmds;
+    parsed.originalcmd = originalcmd; // sets pointer to original command
+    parsed.bgcmds = bgcmds; // sets pointer to list of background commands list initialized above
+
     strcpy(parsed.originalcmd,input_line);
     parse(input_line, &parsed);
 
@@ -42,6 +45,8 @@ int main()
 void exit_shell(struct PCMD parsed)
 {
   int i, status;
+
+  //checks for running processes, waits for completion and deallocates
   for(i=1; i < parsed.bqueue[0];i++)
             if (parsed.bqueue[i] != 0)
             {

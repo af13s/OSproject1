@@ -80,7 +80,7 @@ Assumptions:
 3. input will be nore more than 255 characters
 4. No handling of Zombie processes
 5. Only built-ins in project specification supported
-6. Built-in commands will not appear with I/O redirection
+6. Built-in commands will not appear with I/O redirection, Piping, or Background processes
 
 ==================
 Division of Labor:
@@ -91,14 +91,19 @@ Andrew Florial
 - Execution
 - Pipes
 - I/O Redirection
+- Background processes
+- Built-ins
 - Testing
 
 Phalguna Rupanagudi
 - Parsing
 - Path Resolution
 - Testing
+- Valid Commands Testing
+- Built-ins
 
 Eduardo Alvarez
 - I/O Redirection
 - Documentation 
+- Built-ins
 - Testing

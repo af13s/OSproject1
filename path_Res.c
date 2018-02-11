@@ -61,9 +61,7 @@ char * expandCD(char * arg)
    char p_pwd[250];
    char * ptr = NULL;
    int noArg = 0;
-   //struct stat s;
-  // if (stat(arg, &s) == 0 && S_ISDIR(s.st_mode))
-    //  return arg;
+ 
    
    if(arg && arg[0] == '/')
       return arg;

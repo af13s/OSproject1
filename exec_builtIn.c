@@ -5,9 +5,11 @@
 void exec_builtin(struct PCMD cmds)
 {
    int success;
+   pid_t pid;
+   char path [256];
    
-	switch(cmds.bin1) 
-	{
+  switch(cmds.bin1) 
+  {
       case CD :
             success = chdir(cmds.CMD1[1]);
          
@@ -19,26 +21,30 @@ void exec_builtin(struct PCMD cmds)
             {
                enVar("$PWD",cmds.CMD1[1]);
             }
-      	break;
+        break;
 
       case ECHO :
          printf("%s \n", cmds.CMD1[1]);
          break;
 
       case IO :
-	pid_t pid;
+  
         if ((pid = fork()) < 0)
             printf("there was an error");
         else if (pid == 0)
         {
-            	cmds.CMD1[0], cmds.CMD1; // child executes command
-		exit(1); // exits
+              cmds.CMD1[1] = commandPath(cmds.CMD1[1]);
+              char ** basecommand = &cmds.CMD1[1];
+              close(1);
+              execv(*basecommand, basecommand); // child executes command
+              exit(1); // exits
         }
         else
-        {	
-		char* argv[] = {"/bin/cat", "/proc/pid/io"};	
-		execv(argv[0] , argv); 
-                call_wait(pid,cmds);
+        { 
+          snprintf(path, sizeof(path), "/proc/%d/io",pid);
+          char* argv[] = {"/bin/cat", path, NULL};
+          execv(argv[0] , argv); 
+          call_wait(pid,cmds);
         }
          
 

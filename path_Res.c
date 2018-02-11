@@ -22,7 +22,9 @@ char *  commandPath(char * cmd)
 		
 	}
 
-	if(cmd && memoryAlloc)
+   if(access(cmd,F_OK) == 0)
+      return cmd;
+	else if(cmd && memoryAlloc)
 	{
 		int j = 0;
 		for(j = 0; j < i-1;j++ )
@@ -52,108 +54,93 @@ char *  commandPath(char * cmd)
 char * expandCD(char * arg)
 {
 
-   int arglen = strlen(arg);
-
-   char * pwd = enVar("$PWD",NULL);
-   int pwdlen = strlen(pwd);
-   char * home = enVar("$HOME",NULL);
-   int homelen = strlen(home);
-
-   char temppwd[250];
-   strcpy(temppwd,arg);
-   char * parent = NULL;
-   char * ptr;
-   int templen = 0;
-   char * temp = NULL;
-   int back = -1;
-   int i = 0;
-   char * tempr = arg;
-   
-   
    char targ[250];
+   int i, dots = 0, home = 0;
+   char * rest;
+   char path[250];
+   char p_pwd[250];
+   char * ptr = NULL;
+   int noArg = 0;
+   //struct stat s;
+  // if (stat(arg, &s) == 0 && S_ISDIR(s.st_mode))
+    //  return arg;
+   
+   if(arg && arg[0] == '/')
+      return arg;
+
+   if(!arg)
+   {
+      strcpy(path,enVar("$HOME",NULL));
+      arg = (char *)calloc(strlen(path),1);
+      strcpy(arg,path);
+      return arg;
+   }
    strcpy(targ,arg);
 
-
-   int ndir = 1;
-   char * rest = NULL;
-   char first[50];
-   
-   
-
-   
-   for(i=0;targ[i];i++)
+   for(i = 0; targ[i] && targ[i] != '/'; i++)
    {
-      if(targ[i] == '/')
-      {   
-         if(targ[i + 1] != '\0')
-         {
-            rest = targ + i + 1;
-         
-         }
-
-         
-         break;
-         
-      }
+      if(targ[i] == '.')
+         dots++;
+      if(targ[i] == '~')
+         home = 1;
    }
 
+   if(!dots && !home)
+      rest = targ;
+   else
+      rest = targ + i + 1;
 
-   if(arglen >= 1)
+   if(!arg )
    {
-
-      if(arg[0] == '~')
-         back = 0; /*means a home dir*/
-
-      else if(arglen >= 2 && arg[0] == '.' && arg[1] == '.')
-      {
-         back = 1;
-         for(ptr = temppwd + pwdlen; *ptr != '/'; ptr--);
-         *++ptr = '\0';
-      }
-      
+      home = 1;
+      noArg = 1;
    }
 
-   if(back == 0)
+   if(dots || home)
    {
       if(arg)
          free(arg);
-      if(rest)
-      {
-         arg = (char *)calloc(homelen + strlen(rest) + 2,1);
-         strcpy(arg,home);
-         strcat(arg,"/");
-         strcat(arg,rest);
-         return arg;
-      }
-      else
-      {
-         arg = (char *)malloc(homelen + 1);
-         strcpy(arg,home);
-         return arg;
-      }
-      
-   }
-   else if(back == 1)
-   {
-      if(arg)
-         free(arg);
-       if(rest)
-      {
-         arg = (char *)calloc(strlen(temppwd) + strlen(rest) + 2,1);
-         strcpy(arg,temppwd);
-         strcat(arg,"/");
-         strcat(arg,rest);
-         return arg;
-      }
-      else
-      {
-         arg = (char *)malloc(strlen(temppwd) + 1);
-         strcpy(arg,temppwd);
-         return arg;
-      }
    }
 
+   if(home)
+   {
+      strcpy(path,enVar("$HOME",NULL));
+      if(path[strlen(path) -1 ] != '/')
+         strcat(path,"/");
+      arg = (char * )calloc(strlen(path) + strlen(rest) + 1,1);
+      strcpy(arg,path);
+      if(*rest)
+         strcat(arg,rest);
+   }
+   else if(dots == 1 || dots == 0)
+   {
+      strcpy(path,enVar("$PWD",NULL));
+      if(path[strlen(path) -1 ]!= '/')
+         strcat(path,"/");
+
+      arg = (char *)calloc(strlen(path) + strlen(rest) + 1,1);
+      strcpy(arg,path);
+      if(*rest)
+         strcat(arg,rest);
+   }
+   else if(dots == 2)
+   {
+      strcpy(path,enVar("$PWD",NULL));
+      if( path[strlen(path) -1 ] != '/')
+         strcat(path,"/");
+      for(ptr = path + strlen(path) - 2; *ptr != '/';ptr--);
+      *++ptr = '\0';
+      arg = (char *)calloc(strlen(path) + strlen(rest) + 1,1);
+      strcpy(arg,path);
+      if(*rest)
+         strcat(arg,rest);
+
+   }
 
    return arg;
 
+
+
 }
+
+

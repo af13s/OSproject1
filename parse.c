@@ -113,7 +113,7 @@ void parse(char cmd [], struct PCMD * cstruct )
    		}
    		else if(cmd[i] == '&' && cmd[i+1])
    		{
-   			cmd[i] = ' '
+   			cmd[i] = ' ';
    			cstruct->invalid = 1;
    		}
    		else if(cmd[i] == '|')

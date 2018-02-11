@@ -70,6 +70,8 @@ struct PCMD
 	pid_t * bqueue;
 	char ** bgcmds;
 	char * originalcmd;
+
+	int invalid;
 };
 
 // parsed the command into tokens: PCMD struct

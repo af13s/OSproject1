@@ -14,9 +14,6 @@ void execute(struct PCMD cmd)
     int ret;
     int i;
 
-    if (cmd.background >= 1)
-        cmd.CMD1[2] = NULL;
-
     //check status for completed children
     for(i=1; i < cmd.bqueue[0];i++)
     {
@@ -27,18 +24,9 @@ void execute(struct PCMD cmd)
             int queue_num;
             queue_num = remove_child(cmd.bqueue,ret);
             printf("[%d]+   ",queue_num);
-            printcmd(cmd,*cmd.bgcount);
+            printcmd(cmd,queue_num);
+            removebgcmd(queue_num,cmd);
         }
-    }
-
-    if (cmd.bin1 == 0)
-    {
-        for(i=1; i < cmd.bqueue[0];i++)
-            if (cmd.bqueue[i] != 0)
-               while (waitpid(cmd.bqueue[i],&status,0) == 0);
-
-        printf("Exiting Shell...\n" );
-        exit(0);
     }
 
     gettimeofday(&start, NULL);
@@ -51,18 +39,21 @@ void execute(struct PCMD cmd)
         {
         	if (cmd.redir_type != 0)
         	{
+                // handles redirection
         		exec_redirect(cmd);
         		return;
         	}
 
         	if (cmd.pipe_num > 0)
         	{
+                // handles piping
         		exec_pipes(cmd);
         		return;
         	}
 
             if (cmd.bin1 == ETIM)
             {   
+                //handles etime built-in
                 cmd.CMD1[1] = commandPath(cmd.CMD1[1]);
                 char ** basecommand = &cmd.CMD1[1];
                 int ret = execv(basecommand[0],basecommand);
@@ -70,11 +61,14 @@ void execute(struct PCMD cmd)
 
             if (cmd.bin1 > 0)
             {
+                //handles more builtins
                 exec_builtin(cmd);
                 return;
             }
 
             retur = execv(cmd.CMD1[0],cmd.CMD1);
+            if (retur == -1)
+                printf("%s: command not found\n",cmd.CMD1[0]);
             exit(0);
         }
       else

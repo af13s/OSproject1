@@ -37,6 +37,7 @@ void exec_builtin(struct PCMD cmds)
               char ** basecommand = &cmds.CMD1[1];
               close(1);
               execv(*basecommand, basecommand); // child executes command
+              printf("Failed to exec %s\n", *basecommand);
               exit(1); // exits
         }
         else

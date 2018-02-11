@@ -6,47 +6,57 @@ int main()
 {
   
   char input_line [256];
-  pid_t * bqueue = (pid_t*) calloc(10, sizeof(pid_t));
-  bqueue[0] = 10;
-  int bgcount =1;
-  int i = 0;
-  
+  pid_t * bqueue = (pid_t*) calloc(25, sizeof(pid_t));  // background process queue
+  char ** bgcmds = (char **) calloc(25, sizeof(char*)); // background process command name
+  char * originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char)); // store the original command
+  bqueue[0] = 25;
+
   while(1)
   {
-    struct PCMD parsed;
+    struct PCMD parsed; // PCMD stands for parsed command, contains tokens and descriptors
     parsed.bqueue = bqueue;
-    prompt();
+
+    prompt(); // displays prompt based on environmental variabls
+
     fgets(input_line, 255, stdin);
+    parsed.originalcmd = originalcmd; // sets pointer to original command
+    parsed.bgcmds = bgcmds; // sets pointer to list of background commands list initialized above
+
+    strcpy(parsed.originalcmd,input_line);
     parse(input_line, &parsed);
 
-    parsed.bgcount = &bgcount;
-    int i;
-
-    if (parsed.background >= 1)
-    {
-      parsed.bgcmds[*parsed.bgcount] = (char*) calloc(strlen(input_line), sizeof(char*));
-      strcpy(parsed.bgcmds[*parsed.bgcount],input_line);
-      //printf("parsed.bgcmds: %s",parsed.bgcmds[i]);
-    }
+    // wait for processes to finish and release memory
     if(!strcmp("exit",parsed.CMD1[0]))
     {
-      printf("Exiting Shell...\n");
-      
-
-
-
+      exit_shell(parsed);
       break;
     }
 
     execute(parsed);
-  
-      
-    
   }
 
-  
+  free (bqueue);
+  free (bgcmds);
+  free (originalcmd);
+
+  return 0; 
 }
 
+void exit_shell(struct PCMD parsed)
+{
+  int i, status;
+
+  //checks for running processes, waits for completion and deallocates
+  for(i=1; i < parsed.bqueue[0];i++)
+            if (parsed.bqueue[i] != 0)
+            {
+               while (waitpid(parsed.bqueue[i],&status,0) == 0);
+               printf("[%d]+   ",i);
+               printcmd(parsed,i);
+               removebgcmd(i,parsed);
+            }
+      printf("Exiting Shell...\n");
+}
 
 void freeMem(char ** ST,int size)
 {

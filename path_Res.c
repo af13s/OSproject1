@@ -137,8 +137,6 @@ char * expandCD(char * arg)
 
    return arg;
 
-
-
 }
 
 

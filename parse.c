@@ -170,6 +170,8 @@ void parse(char cmd [], struct PCMD * cstruct )
   	if(cstruct->bin1 == CD)
    		cstruct->CMD1[1] = expandCD(cstruct->CMD1[1]);
 
+ 
+
 }
 
 
@@ -226,7 +228,7 @@ void parse_whitespace(char* line)
 	sepBych('|',line);
 	sepBych('<',line);
 	sepBych('>',line);
-	//sepBych('&',line);
+	
 
 
 }
@@ -295,11 +297,10 @@ char * makearg(char * arg)
       strcpy(storage,temp);
       strcat(storage,"/");
       strcat(storage,rest);
-      printf("%s\n",storage);
       return storage;
    }
 
-   storage = (char *)malloc(strlen(arg) + 1);
+   storage = (char *)calloc(strlen(arg) + 1,1);
    strcpy(storage,arg);
    return storage;
 }

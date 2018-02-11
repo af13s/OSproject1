@@ -9,7 +9,8 @@ int main()
   pid_t * bqueue = (pid_t*) calloc(10, sizeof(pid_t));
   bqueue[0] = 10;
   int bgcount =1;
-
+  int i = 0;
+  
   while(1)
   {
     struct PCMD parsed;
@@ -27,8 +28,34 @@ int main()
       strcpy(parsed.bgcmds[*parsed.bgcount],input_line);
       //printf("parsed.bgcmds: %s",parsed.bgcmds[i]);
     }
+    if(!strcmp("exit",parsed.CMD1[0]))
+    {
+      printf("Exiting Shell...\n");
+      
+
+
+
+      break;
+    }
 
     execute(parsed);
+  
+      
+    
   }
+
+  
+}
+
+
+void freeMem(char ** ST,int size)
+{
+  int i; 
+  for(i = 0; i < size; i++)
+  {
+      free(ST[i]); 
+      ST[i] = NULL;
+  }
+
 
 }

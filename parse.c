@@ -56,6 +56,7 @@ void parse(char cmd [], struct PCMD * cstruct )
    cstruct->bucNum2 = 0;
    cstruct->bucNum3 = 0;
    cstruct->bucNum4 = 0;
+   cstruct->invalid = 0;
 
    int numComs = 1;
    for(i = 0; i < 50; i++)
@@ -100,7 +101,7 @@ void parse(char cmd [], struct PCMD * cstruct )
    			cstruct->redir_type = IN;
    		else if (cmd[i] == '>')
    			cstruct->redir_type = OUT;
-   		else if(cmd[i] == '&' && i > 0 )
+   		else if(cmd[i] == '&' && !cmd[i+1] )
    		{
    			cmd[i] = ' ';
    			cstruct->background++;
@@ -109,6 +110,11 @@ void parse(char cmd [], struct PCMD * cstruct )
    		{
    			cmd[i] = ' ';
    			
+   		}
+   		else if(cmd[i] == '&' && cmd[i+1])
+   		{
+   			cmd[i] = ' '
+   			cstruct->invalid = 1;
    		}
    		else if(cmd[i] == '|')
    			cstruct->pipe_num++;
@@ -169,8 +175,6 @@ void parse(char cmd [], struct PCMD * cstruct )
 
   	if(cstruct->bin1 == CD)
    		cstruct->CMD1[1] = expandCD(cstruct->CMD1[1]);
-
- 
 
 }
 

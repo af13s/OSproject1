@@ -67,7 +67,7 @@ struct PCMD
 
 	//reference to background processes queue
 	pid_t * bqueue;
-	char * bgcmds[10];
+	char ** bgcmds;
 	char * originalcmd;
 };
 

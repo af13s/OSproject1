@@ -27,7 +27,8 @@ void execute(struct PCMD cmd)
             int queue_num;
             queue_num = remove_child(cmd.bqueue,ret);
             printf("[%d]+   ",queue_num);
-            printcmd(cmd,*cmd.bgcount);
+            printcmd(cmd,queue_num);
+            removebgcmd(queue_num,cmd);
         }
     }
 
@@ -35,7 +36,12 @@ void execute(struct PCMD cmd)
     {
         for(i=1; i < cmd.bqueue[0];i++)
             if (cmd.bqueue[i] != 0)
+            {
                while (waitpid(cmd.bqueue[i],&status,0) == 0);
+               printf("[%d]+   ",i);
+               printcmd(cmd,i);
+               removebgcmd(queue_num,cmd);
+            }
 
         printf("Exiting Shell...\n" );
         exit(0);

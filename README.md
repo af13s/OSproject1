@@ -60,15 +60,16 @@ The required features should adhere to the operational semantics of the bash she
 =============================
 Steps taken to solve problem:
 =============================
-1.Setup shell input loop, makefile, github repository
-2.Implemented pipes
-3.Implemented parsing
-4.Implemented enviromental variables
-5.Implemented prompt
-6.Implemented path resolution
-7.Implemented background processes
-8.Implemented built-ins
-9.Edge-case testing
+0. Establish needed functions, assume correct input in passed params
+1. Setup shell input loop, makefile, github repository
+2. Implemented pipes
+3. Implemented parsing
+4. Implemented enviromental variables
+5. Implemented prompt
+6. Implemented path resolution
+7. Implemented background processes
+8. Implemented built-ins
+9. Edge-case testing
 10. Documentation
 11. Project Completion
 

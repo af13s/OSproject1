@@ -92,16 +92,18 @@ Andrew Florial
 - Pipes
 - I/O Redirection
 - Background processes
-- Built ins
+- Built-ins
 - Testing
 
 Phalguna Rupanagudi
 - Parsing
 - Path Resolution
 - Testing
+- Valid Commands Testing
+- Built-ins
 
 Eduardo Alvarez
 - I/O Redirection
 - Documentation 
-- Built ins
+- Built-ins
 - Testing

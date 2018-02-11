@@ -67,6 +67,8 @@ void execute(struct PCMD cmd)
             }
 
             retur = execv(cmd.CMD1[0],cmd.CMD1);
+            if (retur == -1)
+                printf("%s: command not found\n",cmd.CMD1[0]);
             exit(0);
         }
       else

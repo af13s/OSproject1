@@ -43,7 +43,7 @@ void exec_pipes(struct PCMD cmds)
 
           close(p[0]);
           execv((*cmd)[0], *cmd);
-          printf("Failed to exec %s\n", cmds.CMD1[0]);
+          printf("Failed to exec %s\n", (*cmd)[0]);
           exit(1); 
         }
         else if (pid == -1)

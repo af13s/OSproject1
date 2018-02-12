@@ -1,5 +1,6 @@
 #include "functions.h"
 
+
 int memoryAlloc = FALSE;
 
 int main()
@@ -11,6 +12,9 @@ int main()
   char * originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char)); // store the original command
   bqueue[0] = 25;
   char temp[256];
+  int count = 0;
+
+  pid_t parent = getppid();
 
   while(1)
   {
@@ -39,7 +43,6 @@ int main()
         freeMem(parsed.CMD2,parsed.bucNum2);
         freeMem(parsed.CMD3,parsed.bucNum3);
         freeMem(parsed.CMD4,parsed.bucNum4);
-        exit(0);
         break;
       }
 
@@ -52,9 +55,9 @@ int main()
     
   }
 
-  //free (bqueue);
-  //free (bgcmds);
-  //free (originalcmd);
+  free (bqueue);
+  free (bgcmds);
+  free (originalcmd);
 
   return 0; 
 }

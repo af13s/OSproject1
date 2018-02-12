@@ -58,15 +58,13 @@ void execute(struct PCMD cmd)
                 // handles redirection
         		exec_redirect(cmd);
                 return;
-                //exit(0);
         	}
 
         	if (cmd.pipe_num > 0)
         	{
                 // handles piping
-        		exec_pipes(cmd);
-                return;
-               //exit(0);
+        	   exec_pipes(cmd);
+               return;
         	}
 
             if (cmd.bin1 == ETIM)

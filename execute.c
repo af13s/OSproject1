@@ -57,14 +57,14 @@ void execute(struct PCMD cmd)
         	{
                 // handles redirection
         		exec_redirect(cmd);
-        		return;
+                exit(0);
         	}
 
         	if (cmd.pipe_num > 0)
         	{
                 // handles piping
         		exec_pipes(cmd);
-        		return;
+                exit(0);
         	}
 
             if (cmd.bin1 == ETIM)
@@ -81,7 +81,7 @@ void execute(struct PCMD cmd)
                     exit(0);
                 //handles more builtins
                 exec_builtin(cmd);
-                return;
+                exit(0);
             }
 
             retur = execv(cmd.CMD1[0],cmd.CMD1);

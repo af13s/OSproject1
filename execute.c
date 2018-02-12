@@ -68,12 +68,13 @@ void execute(struct PCMD cmd)
 
             retur = execv(cmd.CMD1[0],cmd.CMD1);
             if (retur == -1)
-                printf("%s: command not found\n",cmd.CMD1[0]);
+                if (strlen(cmd.originalcmd) != 1)
+                    printf("%s: command not found\n",cmd.CMD1[0]);
             exit(0);
         }
       else
         {
-            if (retur != -1)
+            if (retur != -1 && cmd.pipe_num == 0 && cmd.redir_type == 0)
         	   call_wait(pid,cmd);
 
             if (cmd.bin1 == ETIM)

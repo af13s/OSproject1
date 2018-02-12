@@ -25,6 +25,8 @@ void exec_pipes(struct PCMD cmds)
   int   p[2];
   pid_t pid;
 	int   in = 0;
+  int counter = 0;
+  int status;
 
   //will be used to iterate
 	char *** cmd = cm;
@@ -52,13 +54,14 @@ void exec_pipes(struct PCMD cmds)
         }
       else
         {
-          if (*(cmd + 1) == NULL)   // if it's the last command allow background process
+          if (counter == 2)   // if it's the last command allow background process
             call_wait(pid,cmds); // wait for the child to finish
           else
-            wait(NULL); // otherwise allow children to  completely finish
+            waitpid(pid,&status,0); // otherwise allow children to  completely finish
           close(p[1]);
           in = p[0]; //for the next command, the input is preserved
           cmd++;
+          counter++;
         }
     }
 }

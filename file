@@ -15,3 +15,4 @@ parse.c
 path_Res.c
 prompt.c
 shell
+yes

@@ -54,10 +54,11 @@ void exec_pipes(struct PCMD cmds)
         }
       else
         {
-          if (counter == 2)   // if it's the last command allow background process
-            call_wait(pid,cmds); // wait for the child to finish
+          if (*(cmd + 1) != NULL) // otherwise allow children to  completely finish
+            waitpid(pid,&status,0);
           else
-            waitpid(pid,&status,0); // otherwise allow children to  completely finish
+            call_wait(pid,cmds); // if it's the last command allow background process
+          
           close(p[1]);
           in = p[0]; //for the next command, the input is preserved
           cmd++;

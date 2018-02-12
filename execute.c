@@ -92,7 +92,9 @@ void execute(struct PCMD cmd)
         }
       else
         {
-            if (retur != -1 && cmd.pipe_num == 0 && cmd.redir_type == 0)
+            if ((cmd.redir_type != 0 || cmd.pipe_num > 0) && cmd.background == 1)
+                waitpid(pid,&status,0);
+            else
         	   call_wait(pid,cmd);
 
             if (cmd.bin1 == ETIM)

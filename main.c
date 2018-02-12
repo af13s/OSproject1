@@ -51,11 +51,10 @@ int main()
       freeMem(parsed.CMD4,parsed.bucNum4);
     
   }
-  free (bqueue);
-  free (bgcmds);
-  free (originalcmd);
 
-
+  //free (bqueue);
+  //free (bgcmds);
+  //free (originalcmd);
 
   return 0; 
 }

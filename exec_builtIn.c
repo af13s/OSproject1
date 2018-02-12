@@ -44,6 +44,6 @@ void exec_builtin(struct PCMD cmds)
          
 
       default :
-         printf("Invalid built_in\n" );
+         printf("");
    }
 }

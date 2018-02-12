@@ -7,24 +7,18 @@ void exec_builtin(struct PCMD cmds)
    int success;
    pid_t pid;
    char path [256];
+   int i =1;
    
   switch(cmds.bin1) 
   {
-      case CD :
-            success = chdir(cmds.CMD1[1]);
-         
-            if (success == -1)
-            {
-               printf("%s: No such file or directory.\n",cmds.CMD1[1]);
-            }
-            else
-            {
-               enVar("$PWD",cmds.CMD1[1]);
-            }
-        break;
-
       case ECHO :
-         printf("%s \n", cmds.CMD1[1]);
+        while (cmds.CMD1[i] != NULL)
+         { 
+            printf("%s ", cmds.CMD1[i]);
+            i++;
+          }
+          printf("\n");
+          exit(EXIT_SUCCESS);
          break;
 
       case IO :

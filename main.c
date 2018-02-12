@@ -39,6 +39,7 @@ int main()
         freeMem(parsed.CMD2,parsed.bucNum2);
         freeMem(parsed.CMD3,parsed.bucNum3);
         freeMem(parsed.CMD4,parsed.bucNum4);
+        exit(0);
         break;
       }
 

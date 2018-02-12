@@ -13,6 +13,7 @@ void execute(struct PCMD cmd)
     int queue_num;
     int ret;
     int i;
+    int success;
 
     //check status for completed children
     for(i=1; i < cmd.bqueue[0];i++)
@@ -30,6 +31,21 @@ void execute(struct PCMD cmd)
     }
 
     gettimeofday(&start, NULL);
+
+    // check for CD
+    if (cmd.bin1 == CD)
+    {
+        success = chdir(cmd.CMD1[1]);
+         
+            if (success == -1)
+            {
+               printf("%s: No such file or directory.\n",cmd.CMD1[1]);
+            }
+            else
+            {
+               enVar("$PWD",cmd.CMD1[1]);
+            }
+    }
 	
 	if((pid = fork()) == -1)
         {
@@ -59,8 +75,10 @@ void execute(struct PCMD cmd)
                 int ret = execv(basecommand[0],basecommand);
             }
 
-            if (cmd.bin1 > 0)
+            if (cmd.bin1 > 0 && cmd.bin1 != ETIME)
             {
+                if (cmd.bin1 == CD)
+                    exit(0);
                 //handles more builtins
                 exec_builtin(cmd);
                 return;

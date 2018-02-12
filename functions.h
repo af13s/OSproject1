@@ -114,4 +114,4 @@ void prompt();
 void exit_shell(struct PCMD);
 
 
-void freeMem(char ** ST,int size);
+void freeMem(char * ST[],int size);

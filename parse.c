@@ -7,42 +7,9 @@ char * check4bin(char* cmd, int * bintype);
 char *  commandPath(char*);
 extern int memoryAlloc;
 
-//int memoryAlloc = FALSE;
 
-/*
-int main()
-{
 
-	int i;
-	struct PCMD tcmd;
-	char x[] = "     ls | $HOME | ping befjhfekj";
 
-	
-	
-	parse(x,&tcmd);
-	for(i = 0; i < tcmd.bucNum1; i++)
-	{
-		printf("B1: %s\n", tcmd.CMD1[i]);
-	}
-
-	for(i = 0; i < tcmd.bucNum2; i++)
-   {
-   	printf("B2: %s\n",tcmd.CMD2[i] );
-   }
-
-   for(i = 0; i < tcmd.bucNum3; i++)
-   {
-   	printf("B3: %s\n",tcmd.CMD3[i] );
-   }
-
-   for(i = 0; i < tcmd.bucNum4; i++)
-   {
-   	printf("B4: %s\n",tcmd.CMD4[i] );
-   }
-
-  	
-}
-*/
 
 
 void parse(char cmd [], struct PCMD * cstruct )
@@ -175,6 +142,7 @@ void parse(char cmd [], struct PCMD * cstruct )
 
   	if(cstruct->bin1 == CD)
    		cstruct->CMD1[1] = expandCD(cstruct->CMD1[1]);
+
 
 }
 

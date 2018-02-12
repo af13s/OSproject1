@@ -10,6 +10,7 @@ int main()
   char ** bgcmds = (char **) calloc(25, sizeof(char*)); // background process command name
   char * originalcmd = (char*) calloc(strlen(input_line+1), sizeof(char)); // store the original command
   bqueue[0] = 25;
+  char temp[256];
 
   while(1)
   {
@@ -18,26 +19,41 @@ int main()
 
     prompt(); // displays prompt based on environmental variabls
 
+
     fgets(input_line, 255, stdin);
+
     parsed.originalcmd = originalcmd; // sets pointer to original command
     parsed.bgcmds = bgcmds; // sets pointer to list of background commands list initialized above
 
-    strcpy(parsed.originalcmd,input_line);
-    parse(input_line, &parsed);
+    
+    
+      strcpy(parsed.originalcmd,input_line);
+      parse(input_line, &parsed);
 
-    // wait for processes to finish and release memory
-    if(!strcmp("exit",parsed.CMD1[0]))
-    {
-      exit_shell(parsed);
-      break;
-    }
+      // wait for processes to finish and release memory
+      if(!strcmp("exit",parsed.CMD1[0]))
+      {
+        exit_shell(parsed);
+        freeMem(parsed.CMD1,parsed.bucNum1);
+        freeMem(parsed.CMD2,parsed.bucNum2);
+        freeMem(parsed.CMD3,parsed.bucNum3);
+        freeMem(parsed.CMD4,parsed.bucNum4);
+        break;
+      }
 
-    execute(parsed);
+      execute(parsed);
+
+      freeMem(parsed.CMD1,parsed.bucNum1);
+      freeMem(parsed.CMD2,parsed.bucNum2);
+      freeMem(parsed.CMD3,parsed.bucNum3);
+      freeMem(parsed.CMD4,parsed.bucNum4);
+    
   }
-
   free (bqueue);
   free (bgcmds);
   free (originalcmd);
+
+
 
   return 0; 
 }
@@ -58,7 +74,7 @@ void exit_shell(struct PCMD parsed)
       printf("Exiting Shell...\n");
 }
 
-void freeMem(char ** ST,int size)
+void freeMem(char * ST[],int size)
 {
   int i; 
   for(i = 0; i < size; i++)

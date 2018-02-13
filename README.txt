@@ -37,11 +37,12 @@ make clean
 ===========
 Known bugs: 
 ===========
-One known bug in the shell program is with redirection and pipes, because of the nature of the forking
+One known bug in the shell program is when using redirection and pipes, because of the nature of the forking
 inside these two features the first child that is created never ends. If you do end the first child then a 
 complication with background processes on the second child arises.So for every pipe or redirect you would
 need an exit command entered. Some of the proposed solutions included booleans or counters to keep track
-of redirect commands, however these presented complications as well.
+of redirect commands, however these presented complications as well. An example would be if you used 2 redirects
+you would also have to call exit 2 times. So for n uses of redirects or pipes exit has to be called n times.
 
 ====================
 Additional comments:
